@@ -5,11 +5,9 @@ from django.contrib.auth import login as user_login
 from app.db_api.authentication import authenticate_role
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
 
 def login(request):
-	# ACADEMICS = QuestionType.objects.get(title='Academics')
-	# INFRASTRUCTURE = QuestionType.objects.get(title='Infrastructure')
-	# FACULTY = QuestionType.objects.get(title='Faculty')
 	if request.method == 'POST':
 		form=LogInForm(request.POST)
 		if form.is_valid():
@@ -17,10 +15,11 @@ def login(request):
 			username=form.cleaned_data['username']
 			password=form.cleaned_data['password']
 			user = authenticate(username=username, password=password)
+			print(user)
 			if user is not None:
 				user_login(request, user)
 				role=authenticate_role(user)
-
+				print(role)
 				if(role == 'STUDENT'):
 					return redirect('student_dashboard')
 				elif (role == 'PROFESSOR'):
@@ -41,10 +40,12 @@ def coordinator_dashboard(request):
 
 
 #@student_required
+@csrf_exempt
 def student_dashboard(request):
 	return render(request, 'student_dashboard_new.html')
 
 #@professor_required
+@csrf_exempt
 def professor_dashboard(request):
 
 	return render(request, 'professor_dashboard_new.html')

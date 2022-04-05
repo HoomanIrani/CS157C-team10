@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load staticfiles %}
+{% load static %}
 <html lang="en" >
     
     <head>
@@ -62,7 +62,7 @@
                             <div class="transbox">
                             <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 100px 0px 100px; border: 1px solid #EEE; border-radius: 25px;" id="login_block">
                                <!-- <img class="responsive-img" style="width: 400px;" src="{% static "app/tp.png" %}" alt="My image"/>    -->
-                               <h3 style=" roboto-condensed">CRS Feedback<br> Management System</h3>                          
+                               <h3 style=" roboto-condensed">Student Opionion: <br>Feedback Management System</h3>                          
                                 <form class="col offset-s3 s6" method="post">
                                     {% csrf_token %}
                                     <div class='row'>
@@ -82,7 +82,7 @@
                                             {{ form.password }}
                                             <label for='password'>Enter your password</label>
                                         </div>
-                                        <label style='float: right;'>
+                                        <label style='float: right'>
                                             <a class='pink-text' href='#!'><b>Forgot Password?</b></a>
                                         </label>
                                     </div>

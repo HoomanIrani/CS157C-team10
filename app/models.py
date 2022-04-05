@@ -25,7 +25,7 @@ class Professor(models.Model):
     type = models.CharField(choices=PROFILE_TYPES, max_length=16, default = 'PROFESSOR')
     prof_id = models.IntegerField() #primary key
     prof_name = models.TextField(max_length=250)
-    courses = models.ManyToManyField(Course, on_delete = models.CASCADE)
+    courses = models.ManyToManyField(Course)
 
 class CourseProfessor(models.Model):
     cp_id = models.IntegerField() #primary key
@@ -37,6 +37,6 @@ class Student(models.Model):
     user = models.OneToOneField(User,on_delete = models.CASCADE)
     profile = models.OneToOneField(Profile,on_delete = models.CASCADE)
     type = models.CharField(choices=PROFILE_TYPES, max_length=16, default = 'STUDENT')
-    course_professor = models.ManyToManyField(CourseProfessor, on_delete = models.CASCADE)
+    course_professor = models.ManyToManyField(CourseProfessor)
     def __str__(self):
         return self.profile.name

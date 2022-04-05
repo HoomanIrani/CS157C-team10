@@ -17,3 +17,20 @@ class LogInForm(forms.Form):
 			}
 		)
 	)
+	password = forms.CharField(
+		label='Password',
+		max_length=50,
+		help_text='Enter Password',
+		widget=forms.TextInput(
+			attrs={
+				'class': 'validate',
+				'type': 'password'
+			}
+		)
+	)
+	class Meta:
+		fields = ['username','password']
+		widgets = {
+			'username':forms.TextInput(),
+			'password':forms.PasswordInput(),
+		}
