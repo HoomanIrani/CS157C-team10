@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        html {
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        .brand-logo {
+            margin-left: 10px;
+            outline: 0;
+        }
+
+        .tab a {
+            outline: 0;
+        }
+
+        .btn-flat {
+            color: white;
+        }
+
+        .btn-flat:hover {
+            background-color: #ff5722;
+        }
+
+        .tab:hover {
+            background-color: #ff5722;
+        }
+
+        #summary,
+        #questions,
+        #preview {
+            margin-top: 100px;
+        }
+
+        .close_question_btn {
+            float: right;
+            background-color: white;
+            color: black;
+        }
+
+        .collapsible-header:hover {
+            background-color: #fff3e0;
+        }
+
+        .card:hover {
+            background-color: #f6f6ff;
+        }
+
+        .fixed-action-btn {
+            position: absolute;
+            display: inline-block;
+            left: 24px;
+            padding: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <nav class="nav-extended #1a237e indigo darken-4">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">
+                <i class="material-icons left">create</i>
+                Create Forms</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <a class="waves-effect waves-light btn-flat">
+                        <i class="material-icons left">exit_to_app</i>
+                        <b>Logout</b>
+                    </a>
+                </li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li>
+                    <a class="waves-effect waves-light btn-flat">
+                        <i class="material-icons left">exit_to_app</i>
+                        <b>Logout</b>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+
+    <div id="questions" class="container col s12">
+        <h2 style="margin-bottom:20px; color:#1a237e;">University Quality Enhancement Feedback</h2>
+
+        <div class="card new_question_card">
+            <div class="card-content">
+                <a class="btn close_question_btn">
+                    <i class="material-icons">close</i>
+                </a>
+                <h5>Select Question Type</h5>
+                <div id="Q1" class="input-field col s12">
+
+                    <select>
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="1">Academics</option>
+                        <option value="2">Faculty</option>
+                        <option value="3">Infrastructure</option>
+                    </select>
+                </div>
+                <h5>Question content</h5>
+                <div class="input-field">
+                    <textarea id="textarea1" class="materialize-textarea"></textarea>
+                    <label for="textarea1">Write your question here</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="card new_question_card_template">
+            <div class="card-content">
+                <a class="close_question_btn btn">
+                    <i class="material-icons">close</i>
+                </a>
+                <h5>Select Question Type</h5>
+                <div id="Q1" class="input-field col s12">
+                    
+                    <select>
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="1">Academics</option>
+                        <option value="2">Faculty</option>
+                        <option value="3">Infrastructure</option>
+                    </select>
+                </div>
+                <h5>Question content</h5>
+                <div class="input-field">
+                    <textarea id="textarea1" class="materialize-textarea"></textarea>
+                    <label for="textarea1">Write your question here</label>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="center-align">
+    <a href="#modal1" class="waves-effect waves-light btn preview-btn modal-trigger">Preview</a>
+    </div>
+
+    <div class="fab-edit" style="position: relative;">
+        <div class="fixed-action-btn" style="position: absolute; display: inline-block; right: 24px;">
+            <a id="new_question_btn" class="btn-floating fab waves-effect waves-light red right">
+                <i class="material-icons">add</i>
+            </a>
+        </div>
+    </div>
+
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Preview</h4>
+            <div>
+                <h5 id="acad_heading">Academics</h5>
+                <ul id="academics-preview" class="collapsible popout" data-collapsible="accordion">
+                    
+                </ul>
+            </div>
+            <div>
+                <h5 id="infra_heading">Infrastructure</h5>
+                <ul id="infra-preview" class="collapsible popout" data-collapsible="accordion">
+                    
+                </ul>
+            </div>
+            <div>
+                <h5 id="faculty_heading">Faculty</h5>
+                <ul id="faculty-preview" class="collapsible popout" data-collapsible="accordion">
+                    
+                </ul>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            <a href="{% url 'coordinator_dashboard' %}" id="next_btn" class="modal-action modal-close waves-effect waves-green btn-flat black-text">Next</a>
+        </div>
+    </div>
+
+    {% csrf_token %}
+
+<!--        
+    <div id="preview" class="container col s12">
+        <div class="card horizontal">
+            <div class="card-stacked">
+                <div class="card-content">
+                    <h5>Are the laboratories properly maintained?</h5>
+                </div>
+                <div class="card-action">
+                    <table class="centered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>Unsatisfactory</b>
+                                </td>
+                                <td>
+                                    <b>Improvement needed</b>
+                                </td>
+                                <td>
+                                    <b>Meets expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceeds expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceptional</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio_1" id="radio_1_1" />
+                                    <label for="radio_1_1"></label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_1" id="radio_1_2" />
+                                    <label for="radio_1_2"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_1" id="radio_1_3" />
+                                    <label for="radio_1_3"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_1" id="radio_1_4" />
+                                    <label for="radio_1_4"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_1" id="radio_1_5" />
+                                    <label for="radio_1_5"> </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="card horizontal">
+            <div class="card-stacked">
+                <div class="card-content">
+                    <h5>How will you rate Food hygiene of canteen/mess ?</h5>
+                </div>
+                <div class="card-action">
+                    <table class="centered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>Unsatisfactory</b>
+                                </td>
+                                <td>
+                                    <b>Improvement needed</b>
+                                </td>
+                                <td>
+                                    <b>Meets expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceeds expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceptional</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio_2" id="radio_2_1" />
+                                    <label for="radio_2_1"></label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_2" id="radio_2_2" />
+                                    <label for="radio_2_2"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_2" id="radio_2_3" />
+                                    <label for="radio_2_3"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_2" id="radio_2_4" />
+                                    <label for="radio_2_4"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_2" id="radio_2_5" />
+                                    <label for="radio_2_5"> </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="card horizontal">
+            <div class="card-stacked">
+                <div class="card-content">
+                    <h5>How frequently water purifiers/water coolers are cleaned?</h5>
+                </div>
+                <div class="card-action">
+                    <table class="centered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>Unsatisfactory</b>
+                                </td>
+                                <td>
+                                    <b>Improvement needed</b>
+                                </td>
+                                <td>
+                                    <b>Meets expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceeds expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceptional</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio_3" id="radio_3_1" />
+                                    <label for="radio_3_1"></label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_3" id="radio_3_2" />
+                                    <label for="radio_3_2"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_3" id="radio_3_3" />
+                                    <label for="radio_3_3"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_3" id="radio_3_4" />
+                                    <label for="radio_3_4"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_3" id="radio_3_5" />
+                                    <label for="radio_3_5"> </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="card horizontal">
+            <div class="card-stacked">
+                <div class="card-content">
+                    <h5>How will you rate the sports facilities?</h5>
+                </div>
+                <div class="card-action">
+                    <table class="centered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>Unsatisfactory</b>
+                                </td>
+                                <td>
+                                    <b>Improvement needed</b>
+                                </td>
+                                <td>
+                                    <b>Meets expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceeds expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceptional</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio_4" id="radio_4_1" />
+                                    <label for="radio_4_1"></label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_4" id="radio_4_2" />
+                                    <label for="radio_4_2"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_4" id="radio_4_3" />
+                                    <label for="radio_4_3"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_4" id="radio_4_4" />
+                                    <label for="radio_4_4"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_4" id="radio_4_5" />
+                                    <label for="radio_4_5"> </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="publish" class="col s12">Test 4</div>
+-->
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.button-collapse').sideNav({
+                menuWidth: 300, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+                closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                draggable: true // Choose whether you can drag to open on touch screens
+            });
+
+            $('.modal').modal({
+                complete: function(){
+                    $(".added-question").each(function(index){
+                        $(this).remove();
+                    });
+                }
+            });
+
+            $('.answer-btn-1').click(function () {
+                $(this).closest('div').prev().addClass("red white-text filled lighten-2");
+                $(this).closest('div').prev().removeClass("unfilled amber yellow light-green green");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.answer-btn-2').click(function () {
+                $(this).closest('div').prev().addClass("amber filled lighten-2");
+                $(this).closest('div').prev().removeClass("unfilled red white-text yellow light-green green");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+
+            });
+
+            $('.answer-btn-3').click(function () {
+                $(this).closest('div').prev().addClass("yellow filled lighten-2");
+                $(this).closest('div').prev().removeClass("unfilled amber red white-text light-green green");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.answer-btn-4').click(function () {
+                $(this).closest('div').prev().addClass("light-green white-text filled lighten-2");
+                $(this).closest('div').prev().removeClass("amber yellow red green unfilled");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.answer-btn-5').click(function () {
+                $(this).closest('div').prev().addClass("green white-text filled lighten-2");
+                $(this).closest('div').prev().removeClass("amber yellow light-green red unfilled");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('select').material_select();
+
+            $(".new_question_card_template").hide();
+            $(".preview_question_template").hide();
+
+            $("#new_question_btn").on('click', function () {
+                $(".new_question_card_template").clone(true,true).appendTo("#questions").show().removeClass("new_question_card_template").addClass('new_question_card');
+                $('select').material_select();
+                $('.preview-btn').show();                
+            });
+
+            $("#acad_heading").hide();
+            $("#infra_heading").hide();
+            $("#faculty_heading").hide();
+
+            //$(".close_question_btn").hide();
+
+            $(".close_question_btn").click(function () {
+                $(this).parent().parent().remove();
+                if ($(".new_question_card").length <= 0){
+                    $('.preview-btn').hide();
+                }
+                $("#acad_heading").hide();
+                $("#infra_heading").hide();
+                $("#faculty_heading").hide();
+            });
+
+            $('.preview-btn').click(function(){
+                var acadquestions = [];
+                var infraquestions = [];
+                var facultyquestions = [];
+                
+                $('.new_question_card').each(function(index){
+                    var q_type = $(this).find('select').val();
+                    var q_text = $(this).find('textarea').val();
+
+                    console.log(q_text,q_type);
+                    
+                    if (q_type == 1){
+                        if (q_text)
+                            acadquestions.push(q_text);
+                    } else if (q_type == 2) {
+                        if (q_text)
+                            facultyquestions.push(q_text);
+                    } else if (q_type == 3) {
+                        if (q_text)
+                            infraquestions.push(q_text);
+                    }
+
+                    /* $.ajax({
+                        url:'/ajax/create_question',
+                        data:{
+                            'q_type':q_type,
+                            'q_text':q_text
+                        },
+                        dataType: 'json',
+                        success:function(data){console.log('success')}
+                    }); */
+                });
+
+                if (acadquestions.length){
+                    for (question of acadquestions){
+                        $("#acad_heading").show();
+                        console.log(question);
+                        $("#academics-preview").append(
+                            '<li class="added-question"><div class="collapsible-header">'+ question +'</div><div class="collapsible-body"><a class="waves-effect waves-teal btn answer-btn-1 red collect_answer">Unsatisfactory</a><a class="waves-effect waves-teal btn answer-btn-2 amber collect_answer">Needs Improvement</a><a class="waves-effect waves-teal btn answer-btn-3 yellow collect_answer">Satisfactory</a><a class="waves-effect waves-teal btn answer-btn-4 light-green collect_answer">Exceeds Expectations</a><a class="waves-effect waves-teal btn answer-btn-5 green collect_answer">Excellent</a></div></li>'
+                        )
+                    }
+                }
+                if (infraquestions.length){
+                    for (question of infraquestions){
+                        $("#infra_heading").show();
+                        console.log(question);
+                        $("#infra-preview").append(
+                            '<li class="added-question"><div class="collapsible-header">'+ question +'</div><div class="collapsible-body"><a class="waves-effect waves-teal btn answer-btn-1 red collect_answer">Unsatisfactory</a><a class="waves-effect waves-teal btn answer-btn-2 amber collect_answer">Needs Improvement</a><a class="waves-effect waves-teal btn answer-btn-3 yellow collect_answer">Satisfactory</a><a class="waves-effect waves-teal btn answer-btn-4 light-green collect_answer">Exceeds Expectations</a><a class="waves-effect waves-teal btn answer-btn-5 green collect_answer">Excellent</a></div></li>'
+                        )
+                    }
+                }
+                
+                if(facultyquestions.length){
+                    for (question of facultyquestions){
+                        $("#faculty_heading").show();
+                        console.log(question);
+                        $("#faculty-preview").append(
+                            '<li class="added-question"><div class="collapsible-header">'+ question +'</div><div class="collapsible-body"><a class="waves-effect waves-teal btn answer-btn-1 red collect_answer">Unsatisfactory</a><a class="waves-effect waves-teal btn answer-btn-2 amber collect_answer">Needs Improvement</a><a class="waves-effect waves-teal btn answer-btn-3 yellow collect_answer">Satisfactory</a><a class="waves-effect waves-teal btn answer-btn-4 light-green collect_answer">Exceeds Expectations</a><a class="waves-effect waves-teal btn answer-btn-5 green collect_answer">Excellent</a></div></li>'
+                        )
+                    }
+                }
+
+                if(acadquestions.length + infraquestions.length + facultyquestions.length == 0){
+                    alert('need a question atleast');
+                }
+            });
+            
+            $('#next_btn').click(function(){
+                var acadquestions = [];
+                var infraquestions = [];
+                var facultyquestions = [];
+                
+                $('.new_question_card').each(function(index){
+                    var q_type = $(this).find('select').val();
+                    var q_text = $(this).find('textarea').val();
+
+                    console.log(q_text,q_type);
+                    
+                    if (q_type == 1){
+                        if (q_text)
+                            acadquestions.push(q_text);
+                    } else if (q_type == 2) {
+                        if (q_text)
+                            facultyquestions.push(q_text);
+                    } else if (q_type == 3) {
+                        if (q_text)
+                            infraquestions.push(q_text);
+                    }
+                });
+                
+                var obj = {
+                    'length': acadquestions.length+infraquestions.length+facultyquestions.length,
+                    'form':"{{ curr_form.id }}",
+                    'questions':[]
+                };
+                
+                for (question of acadquestions){
+                    obj.questions.push({
+                        'type':'Academics',
+                        'text':question,
+                    });
+                }
+                
+                for (question of infraquestions){
+                    obj.questions.push({
+                        'type':'Infrastructure',
+                        'text':question,
+                    });
+                }
+
+                for (question of facultyquestions){
+                    obj.questions.push({
+                        'type':'Faculty',
+                        'text':question,
+                    });
+                }
+
+                $.post('ajax',{
+                    'csrfmiddlewaretoken':jQuery("[name=csrfmiddlewaretoken]").val(),
+                    'jsonstring':JSON.stringify(obj)},
+                    function(response){
+                    console.log('success');
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>

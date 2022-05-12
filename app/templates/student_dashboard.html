@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% extends 'student_base.html' %}
+
+{% block content %}
+ 
+<div class="container">
+    {% if numberofforms %}
+    {% for feedbackform in feedbackforms %}
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="card light-blue ">
+            <div class="card-content white-text">
+                <span class="card-title">Active Feedback</span>
+                <p>{{ feedbackform.title }}</p>
+            </div>
+            <div class="card-action">
+		<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Give Feedback</a>
+            </div>
+            </div>
+        </div>
+    </div>
+   <div id="modal1" class="modal modal-fixed-footer ">
+    <div class="modal-content">
+      <h4>Instructions for Feedback</h4>
+      <p class="flow-text">
+	1. Give your feedback honestly. <b>Biased feedbacks will be detected and discarded.</b> <br>
+	2. Take <b>sufficient time to read each question</b> before giving your response. <br>
+	3. Your feedback will remain <b>anonymous</b>. Give your feedback fearlessly. <br>
+	4. Giving feedback is <b>mandatory</b> for all students who are eligible for it. (Attendance > 75%). <br>
+	5. Give your feedback keeping in mind that your feedback will be analyzed and thus used for the <b>enhancement of the various facilities and services</b> you're provided by the university/college. <br>
+	6. You're allowed to give feedback <b>only once</b> per scheduled feedback period.</p>
+    </div>
+    <div class="modal-footer">
+        <a href="{% url 'student_feedback' feedbackform.id %}" class="waves-effect waves-teal btn-flat blue">I've read the instructions</a>
+    </div>
+  </div>
+    {% endfor %}
+    {% else %}
+    <p class="flow-text">There are currently no feedback forms to fill out! Please check this space later!</p>
+    {% endif %}
+</div>
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('.button-collapse').sideNav({
+            menuWidth: 300, // Default is 300
+            edge: 'left', // Choose the horizontal origin
+            closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+            draggable: true // Choose whether you can drag to open on touch screens
+        });
+
+        $('.modal').modal();
+        
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrainWidth: true, // Does not change width of dropdown to that of the activator
+            hover: false, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: true, // Displays dropdown below the button
+            alignment: 'left', // Displays dropdown with edge aligned to the left of button
+            stopPropagation: false // Stops event propagation
+          }
+        );
+    });
+
+</script>
+{% endblock %}

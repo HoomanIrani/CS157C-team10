@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+
+        html {
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        .brand-logo {
+            margin-left: 10px;
+            outline: 0;
+        }
+
+        .tab a {
+            outline: 0;
+        }
+
+        .btn-flat {
+            color: white;
+        }
+
+        .btn-flat:hover {
+            background-color: #ff5722;
+        }
+
+        .tab:hover {
+            background-color: #ff5722;
+        }
+
+        #summary,
+        #questions,
+        #preview {
+            margin-top: 100px;
+        }
+
+        .delete_question {
+            float: right;
+            color: white;
+        }
+
+        .collapsible-header:hover {
+            background-color: #fff3e0;
+        }
+
+        
+
+        .fixed-action-btn {
+            position: absolute;
+            display: inline-block;
+            left: 24px;
+            padding: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="nav-extended #1a237e indigo darken-4">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">
+                <i class="material-icons left">create</i>
+                Create Forms</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <a href="{% url 'logout_view' %}" class="waves-effect waves-light btn-flat">
+                        <i class="material-icons left">exit_to_app</i>
+                        <b>Logout</b>
+                    </a>
+                </li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li>
+                    <a href="{% url 'logout_view' %}" class="waves-effect waves-light btn-flat" >
+                        <i class="material-icons left">exit_to_app</i>
+                        <b>Logout</b>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+
+    <div id="questions" class="container col s12">
+        <div class="card">
+            <div style="background-color: rgb(243, 241, 241); height: 150px;" class="card-content">
+                <div class="container center">
+                    <div >
+                        <div >
+                            <div class="input-field col s6 center">
+                                <input style="font-size: 30px;" value="{{form.title}}" id="first_name" type="text" class="form_title">
+                                <label style="font-size: 20px;" class="active" for="first_name">Title</label>
+                            </div>
+                            <a class="save_title waves-effect waves-light btn">Save</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-action">
+                
+                <ul class="collapsible" data-collapsible="accordion">
+                    <li>
+                        <div class="collapsible-header">Academics</div>
+                        <div class="collapsible-body">
+                            <ul class="collapsible" data-collapsible="accordion">
+                                {% for question in acadquestions %}
+                                <li>
+                                    <div class="collapsible-header">
+                                        {{question.text}}
+                                    </div>
+                                    <div class="collapsible-body">
+                                        <div class="center-align row">
+                                            <a data-answer="1" class="waves-effect waves-teal btn answer-btn-1 red collect_answer">Unsatisfactory</a>
+                                            <a data-answer="2" class="waves-effect waves-teal btn answer-btn-2 amber collect_answer">Needs Improvement</a>
+                                            <a data-answer="3" class="waves-effect waves-teal btn answer-btn-3 yellow collect_answer">Satisfactory</a>
+                                            <a data-answer="4" class="waves-effect waves-teal btn answer-btn-4 light-green collect_answer">Exceeds Expectations</a>
+                                            <a data-answer="5" class="waves-effect waves-teal btn answer-btn-5 green collect_answer">Excellent</a>
+                                        </div>
+                                        <div id="question{{ question.id }}" class="center-align row">
+                                            <a href="#" class="red white-text waves-effect waves-light btn del_question">Delete Question</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">Infrastructure</div>
+                        <div class="collapsible-body">
+                            <ul class="collapsible" data-collapsible="accordion">
+                                {% for question in infraquestions %}
+                                <li>
+                                    <div class="collapsible-header">{{question.text}}</div>
+                                    <div class="collapsible-body">
+                                        <div class="center-align row">
+                                            <a data-answer="1" class="waves-effect waves-teal btn answer-btn-1 red collect_answer">Unsatisfactory</a>
+                                            <a data-answer="2" class="waves-effect waves-teal btn answer-btn-2 amber collect_answer">Needs Improvement</a>
+                                            <a data-answer="3" class="waves-effect waves-teal btn answer-btn-3 yellow collect_answer">Satisfactory</a>
+                                            <a data-answer="4" class="waves-effect waves-teal btn answer-btn-4 light-green collect_answer">Exceeds Expectations</a>
+                                            <a data-answer="5" class="waves-effect waves-teal btn answer-btn-5 green collect_answer">Excellent</a>
+                                        </div>
+                                        <div id="question{{ question.id }}" class="center-align row">
+                                            <a href="#" class="red white-text waves-effect waves-light btn del_question">Delete Question</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">Faculty</div>
+                        <div class="collapsible-body">
+                            <ul class="collapsible" data-collapsible="accordion">
+                                {% for question in facultyquestions %}
+                                <li>
+                                    <div class="collapsible-header">{{question.text}}</div>
+                                    <div class="collapsible-body">
+                                        <div class="center-align row">
+                                            <a data-answer="1" class="waves-effect waves-teal btn answer-btn-1 red collect_answer">Unsatisfactory</a>
+                                            <a data-answer="2" class="waves-effect waves-teal btn answer-btn-2 amber collect_answer">Needs Improvement</a>
+                                            <a data-answer="3" class="waves-effect waves-teal btn answer-btn-3 yellow collect_answer">Satisfactory</a>
+                                            <a data-answer="4" class="waves-effect waves-teal btn answer-btn-4 light-green collect_answer">Exceeds Expectations</a>
+                                            <a data-answer="5" class="waves-effect waves-teal btn answer-btn-5 green collect_answer">Excellent</a>
+                                        </div>
+                                        <div id="question{{ question.question_id }}" class="center-align row">
+                                            <a href="#" class="red white-text waves-effect waves-light btn del_question">Delete Question</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <div class="card new_question_card">
+                    <div class="card-content">
+                        <h5>Select Question Type</h5>
+                        <div id="Q1" class="input-field col s12">
+                            <select id="#selectq">
+                                <option value="" disabled selected>Choose your option</option>
+                                <option value="1">Academics</option>
+                                <option value="2">Faculty</option>
+                                <option value="3">Infrastructure</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <h5>Question content</h5>
+                            <div class="input-field col s7">
+                                <textarea id="textarea1" class="materialize-textarea"></textarea>
+                                <label for="textarea1">Write your question here</label>
+                            </div>
+                            <h5>Tag</h5>
+                            <div id="Q2" class="input-field col s5">
+                                <select id="#selectt">
+                                    <option value="" disabled selected>Choose your option</option>
+                                    {% for tag in tags %}
+                                    <option value="{{tag.tag_id}}">{{tag.tag_title}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h5>Tag Predicted: </h5>
+                            <p class="tag-predicted"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="center-align">
+                    <a href="{% url 'edit_form' form.form_id %}" class="waves-effect waves-light btn save_and_continue">Save and Add Another</a>
+                    <a href="{% url 'coordinator_dashboard' %}" class="waves-effect waves-light btn green">Finish</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- <div class="center-align">
+    <a href="#modal1" class="waves-effect waves-light btn preview-btn modal-trigger">Preview</a>
+    </div> -->
+
+    {% csrf_token %}
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.button-collapse').sideNav({
+                menuWidth: 300, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+                closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                draggable: true // Choose whether you can drag to open on touch screens
+            });
+
+            $('select').material_select();
+
+            $('#textarea1').on('input',function(){
+                console.log('before',$('#selectt').val());
+                $.ajax({
+                    url:'ajax/predict_tags',
+                    method:'POST',
+                    data:{
+                        'text':$('#textarea1').val(),
+                        'csrfmiddlewaretoken':jQuery("[name=csrfmiddlewaretoken]").val(),
+                    },
+                    success:function(response){
+                        $('.tag-predicted').text(response.tag);
+                        console.log('tag',response.tag);
+
+                    }
+                })
+                console.log('after',$('#selectt').val());
+            });
+
+            $('.save_title').click(function(){
+                $.ajax({
+                    url:'ajax/title',
+                    method:'POST',
+                    data:{
+                        'formid':"{{form.form_id}}",
+                        'title':$(".form_title").val(),
+                        'csrfmiddlewaretoken':jQuery("[name=csrfmiddlewaretoken]").val(),
+                    },
+                    success:function(response){
+                        console.log('title changed');
+                    }
+                })
+            });
+
+            $('.del_question').click(function(){
+                var q_id = $(this).parent().attr('id');
+                q_id = q_id.split('question')[1];
+                $.ajax({
+                    url:'ajax/delq',
+                    method:'POST',
+                    data:{
+                        'formid':"{{form.form_id}}",
+                        'qid':q_id,
+                        'csrfmiddlewaretoken':jQuery("[name=csrfmiddlewaretoken]").val(),
+                    },
+                    success:function(response){
+                        console.log('question deleted');
+                        location.reload();
+                    }
+                });
+            });
+
+            $(".save_and_continue").click(function(){
+                var type = '';
+                if ($('#Q1').find("select").val() == 1){
+                    type = 'Academics';
+                } else if ($('#Q1').find("select").val() == 2) {
+                    type = 'Faculty';
+                } else if ($('#Q1').find("select").val() == 3) {
+                    type = 'Infrastructure';
+                } else {
+                    type = "";
+                    alert("Type cannot be blank");
+                } 
+                console.log('jquery called');
+                if( type != "") {
+                    $.ajax({
+                        url:'ajax/question',
+                        method:'POST',
+                        data:{
+                            'formid':"{{form.form_id}}",
+                            'csrfmiddlewaretoken':jQuery("[name=csrfmiddlewaretoken]").val(),
+                            'text':$('#textarea1').val(),
+                            'type':type,
+                            'tagid':$('#Q2').find("select").val()
+                        },
+                        success:function(response){
+                            console.log('question saved');
+                            //location.reload();
+                        },
+                        error:function(jqxhr, exception){
+                            console.log(jqxhr);
+                            console.log(exception);
+                            console.log('ajax error');
+                        }
+                    });
+                    console.log('ajax called');
+                }
+            })
+
+            $('.answer-btn-1').click(function () {
+                $(this).closest('div').prev().addClass("red white-text filled lighten-2");
+                $(this).closest('div').prev().removeClass("unfilled amber yellow light-green green");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.answer-btn-2').click(function () {
+                $(this).closest('div').prev().addClass("amber filled lighten-2");
+                $(this).closest('div').prev().removeClass("unfilled red white-text yellow light-green green");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+
+            });
+
+            $('.answer-btn-3').click(function () {
+                $(this).closest('div').prev().addClass("yellow filled lighten-2");
+                $(this).closest('div').prev().removeClass("unfilled amber red white-text light-green green");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.answer-btn-4').click(function () {
+                $(this).closest('div').prev().addClass("light-green white-text filled lighten-2");
+                $(this).closest('div').prev().removeClass("amber yellow red green unfilled");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.answer-btn-5').click(function () {
+                $(this).closest('div').prev().addClass("green white-text filled lighten-2");
+                $(this).closest('div').prev().removeClass("amber yellow light-green red unfilled");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+
+        });
+
+    </script>
+</body>
+
+</html>

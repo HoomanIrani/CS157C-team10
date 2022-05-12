@@ -1,0 +1,593 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Faculty Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css"
+        media="all" />
+
+    <link rel="stylesheet" href="{% static 'star-rating-svg.css' %}">
+
+    <style>
+        html {
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        .side {
+            height: 80%;
+        }
+
+        .tabs {
+            height: 60px;
+
+            color: #1a237e;
+        }
+
+
+        .tabs .tab a {
+            color: #1a237e;
+            font-size: 20px;
+        }
+
+        .tabs .tab a.active {
+
+            color: #1a237e;
+        }
+
+        .tabs .indicator {
+            background-color: #1a237e;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 110px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rgb(245, 245, 245);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+
+        }
+
+        .collection-item {
+            height: 50px;
+            font-size: 20px;
+        }
+
+        #toggleSideNav {
+            float: right;
+            position: relative;
+        }
+
+        .brand-logo {
+            margin-left: 10px;
+        }
+
+        .profile {
+            margin-top: 10px;
+            color: #ffffff;
+        }
+
+        .tabs {
+            margin-top: 41px;
+            color: #1a237e;
+        }
+
+        .tab {
+            color: #1a237e;
+        }
+
+        .profile:hover {
+            background-color: #e65100;
+        }
+
+        #form1,
+        #form2 {
+            margin-left: 20%;
+            margin-top: -30px;
+        }
+
+        .positive {
+            background-color: rgb(201, 255, 201);
+            border-radius: 10px;
+            margin-right: 100px;
+        }
+
+        .positive-chip {
+            background-color: rgb(120, 209, 120);
+            font-size: 20px;
+
+        }
+
+        .negative {
+            background-color: rgb(255, 201, 201);
+            border-radius: 10px;
+            margin-left: 100px;
+        }
+
+        .negative-chip {
+            background-color: rgb(226, 135, 135);
+            font-size: 20px;
+
+        }
+
+        .card-title {
+            font-size: 20px;
+        }
+
+        .numberCircle {
+            border-radius: 50%;
+            behavior: url(PIE.htc);
+            width: 36px;
+            height: 36px;
+            padding: 8px;
+            background: #fff;
+            border: 2px solid #666;
+            color: #666;
+            text-align: center;
+            font: 32px Arial, sans-serif;
+        }
+
+        #chart1div {
+            width: 75%;
+            height: 225px;
+            font-size: 11px;
+        }
+
+        #chart2div {
+            width: 70%;
+            height: 200px;
+        }
+
+        .charts {
+            margin-top: 20px;
+        }
+
+
+        .chart__label {
+            padding-left: 10px;
+            line-height: 30px;
+            color: black;
+        }
+
+        nav {
+
+            background-color: #1a237e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="{%url 'faculty_dashboard'%}" class="brand-logo">Faculty Dashboard</a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse">
+                    <i class="material-icons">menu</i>
+                </a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li>
+                        <a class='dropdown-button' data-activates="dropdown1" href="#">
+                            <i class="material-icons left">person</i><strong>Hello, Faculty<i
+                                    class="material-icons right">arrow_drop_down</i></strong></a>
+                    </li>
+                    <li>
+                        <a href=""></a>
+                    </li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo" style="border : 0;">
+                    <li>
+                        <a href="{%url 'faculty_profile'%}">Profile</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'change_password' %}">Change Password</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout_view' %}">Logout</a>
+                    </li>
+                    </li>
+                </ul>
+                <ul class="dropdown-content" id="dropdown1">
+                    <li>
+                        <a href="{%url 'faculty_profile'%}">Profile</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'change_password' %}">Change Password</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout_view' %}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+    </div>
+
+    <div class="row">
+        <div class="col s2">
+            <ul class="collection with-header pinned" style="min-width: 300px;">
+                <li class="collection-header">
+                    <h4>Evaluations</h4>
+                </li>
+                {% for form in forms %}
+                <li class="collection-item">
+                    <div>{{form.title}}<a href="#" data-formid="{{form.form_id}}" class="eval-btn secondary-content"><i
+                                class="material-icons small">send</i></a></div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+
+        {% for form,data in context.items %}
+        <div id="form{{form.form_id}}" class="page col s10">
+            <div class="row">
+                <div class="col s12">
+                    <ul class="tabs">
+                        {% for subject,data1 in data.items %}
+                        <li class="tab col s3">
+                            <a href="#subject{{subject.course_code}}">{{subject}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% for subject,subdata in data.items %}
+                <div id="subject{{subject.course_code}}" class="col s12">
+                    <div class="row">
+                        <div class="col s12 m9 l10">
+                            <div class="row">
+                                <div>
+                                    <div id="overall" class="section scrollspy">
+                                        <div class="card-panel">
+                                            <div style="font-size: 35px;" class="card-title">Overall</div>
+                                            <div class="row">
+                                                <div style="border-right: 1px solid rgb(214, 208, 208);"
+                                                    class="col s4 center-align">
+                                                    <div>
+                                                        <h1 style="font-size: 60px;">{{subdata.overall.avg}}</h1>
+                                                    </div>
+                                                    <div
+                                                        class="my-rating rating{{form.form_id}}-{{subject.course_code}}">
+                                                    </div>
+                                                    <div>
+                                                        <h5>
+                                                            <i
+                                                                class="material-icons">person</i>{{subdata.overall.scores.6.val}}
+                                                            Total
+                                                        </h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col s8">
+                                                    <div class="charts">
+                                                        <div class="chart chart--dev">
+
+                                                            <ul class="chart--horiz">
+
+                                                                <li
+                                                                    style="background-color: #88b131; width: {{subdata.overall.scores.5.perc}}%;">
+                                                                    <div class="chart__label">
+                                                                        {{subdata.overall.scores.5.val}}
+                                                                    </div>
+                                                                </li>
+
+                                                                <li
+                                                                    style="background-color: #99cc00;width: {{subdata.overall.scores.4.perc}}%;">
+                                                                    <div class="chart__label">
+                                                                        {{subdata.overall.scores.4.val}}
+                                                                    </div>
+                                                                </li>
+                                                                <li
+                                                                    style="background-color: #ffcf02;width: {{subdata.overall.scores.3.perc}}%;">
+                                                                    <div class="chart__label">
+                                                                        {{subdata.overall.scores.3.val}}
+                                                                    </div>
+                                                                </li>
+                                                                <li
+                                                                    style="background-color: #ff9f02;width: {{subdata.overall.scores.2.perc}}%;">
+                                                                    <div class="chart__label">
+                                                                        {{subdata.overall.scores.2.val}}
+                                                                    </div>
+                                                                </li>
+                                                                <li
+                                                                    style="background-color: #ff6f31;width: {{subdata.overall.scores.1.perc}}%;">
+                                                                    <div class="chart__label">
+                                                                        {{subdata.overall.scores.1.val}}
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div id="tag_wise" class="section scrollspy">
+                                            <div class="card">
+                                                <div style="background-color: rgb(235, 235, 235);" class="card-content">
+                                                    <h4>Tag Wise Evaluation</h4>
+                                                </div>
+                                                <div class="card-action">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="positive col s5 flow-text">
+                                                                <div class="positive-chip chip">Punctuality</div>
+                                                                <br>This teacher is punctual, can clear our doubts and personal guidance is at its best.
+                                                            </div>
+                                                            <div class="negative col s5 push-s1 flow-text">
+                                                                <div class="negative-chip chip">Motivation</div>
+                                                                <br>This Teacher does not encourage different answers, demotivates us, and makes fun of us.
+                                                            </div>
+                                                    
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="positive col s5 flow-text">
+                                                                <div class="positive-chip chip">Interesting</div>
+                                                                <br>Try's hard to make subject interesting, organises activites to grab attention.
+                                                            </div>
+                                                            <div class="negative col s5 push-s1 flow-text">
+                                                                <div class="negative-chip chip">Grades</div>
+                                                                <br>Tough Grader. Doesn't give marks easily. Difficult to score bonus.
+                                                            </div>
+                                                        </div>
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                <div id="question_wise" class="section scrollspy">
+                                    <div class="card">
+                                        <div style="background-color: rgb(235, 235, 235);" class="card-content">
+                                            <h4>Question Wise Evaluation</h4>
+                                        </div>
+                                        <div class="card-action">
+                                            <div class="row">
+                                                {% for question,qdata in subdata.responses.items %}
+                                                <div class="col s8 offset-s2">
+                                                    <div class="card-panel">
+                                                        <span class="card-title">{{question}} </span>
+
+                                                        <div class="charts">
+                                                            <div class="chart chart--dev">
+
+                                                                <ul class="chart--horiz">
+
+                                                                    <li
+                                                                        style="background-color: #88b131;width: {{qdata.scores.5.perc}}%;">
+                                                                        <div class="chart__label">
+                                                                            {{qdata.scores.5.val}}
+                                                                        </div>
+                                                                    </li>
+
+                                                                    <li
+                                                                        style="background-color: #99cc00;width: {{qdata.scores.4.perc}}%;">
+                                                                        <div class="chart__label">
+                                                                            {{qdata.scores.4.val}}
+                                                                        </div>
+                                                                    </li>
+                                                                    <li
+                                                                        style="background-color: #ffcf02;width: {{qdata.scores.3.perc}}%;">
+                                                                        <div class="chart__label">
+                                                                            {{qdata.scores.3.val}}
+                                                                        </div>
+                                                                    </li>
+                                                                    <li
+                                                                        style="background-color: #ff9f02;width: {{qdata.scores.2.perc}}%;">
+                                                                        <div class="chart__label">
+                                                                            {{qdata.scores.2.val}}
+                                                                        </div>
+                                                                    </li>
+                                                                    <li
+                                                                        style="background-color: #ff6f31;width: {{qdata.scores.1.perc}}%;">
+                                                                        <div class="chart__label">
+                                                                            {{qdata.scores.1.val}}
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div id="tag_wise" class="section scrollspy">
+                                <div class="card">
+                                    <div style="background-color: rgb(235, 235, 235);" class="card-content">
+                                        <h4>Tag Wise Evaluation</h4>
+                                    </div>
+                                    <div class="card-action">
+                                        <canvas id="tag-wise"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col hide-on-small-only m3 l2">
+                            <ul class="section table-of-contents pinned">
+                                <li>
+                                    <a href="#overall"> Overall Rating</a>
+                                </li>
+                                <li>
+                                    <a href="#question_wise">Question Wise Evaluation</a>
+                                </li>
+                                <li>
+                                    <a href="#tag_wise">Tag Wise Evaluation</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="{% static 'jquery.star-rating-svg.js' %}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.page').each(function (index) {
+                if (index != 0) {
+                    $(this).hide();
+                }
+            })
+
+            $('.collection-item:first').addClass('active');
+
+            $('.eval-btn').click(function () {
+                console.log('btn clicked');
+                $('.page').each(function (index) {
+                    $(this).hide();
+                });
+
+                console.log($(this).data('formid'));
+                $('#form' + $(this).data('formid')).show();
+
+                $('.collection-item').each(function (index) {
+                    $(this).removeClass('active');
+                });
+
+                $(this).parent().parent().addClass('active');
+            });
+
+            {% for form, data in context.items %}
+            $(".my-rating").starRating({
+                starSize: 30,
+                useFullStars: false,
+                activeColor: "#5A5A5A",
+                callback: function (currentRating, $el) {
+
+                }
+            });
+            var ctx = document.getElementById('tag-wise').getContext('2d');
+
+
+            var chart = new Chart(ctx, {
+
+                type: 'line',
+
+
+                data: {
+                    labels: ["f1", "f2", "f3", "f4", "f5"],
+                    datasets: [
+                        {% for k, v in graphs.items %}
+                        {
+                    label: "{{k}}",
+                    markerType: "square",
+                    lineTension: 0,
+                    fill: false,
+                    borderColor: '#' + parseInt(Math.random() * 0xffffff).toString(16),
+                    data: [
+                        {%for val in v %}
+                                {{ val }},
+            {% endfor %}
+                            ],
+                        },
+            {% endfor %}
+                    ] 
+                },
+
+            // Configuration options go here
+            options: {
+            theme: 'light2',
+            markerType: "square",
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+        }
+            });
+
+        {% for subject, subdata in data.items %}
+
+        var rate = parseFloat("{{subdata.overall.avg}}");
+        var diff = rate - Math.floor(rate);
+        console.log(rate, diff);
+        if (diff >= 0.75) {
+            rate = rate + (1 - diff) + '.0';
+        } else if (diff <= 0.25) {
+            rate = rate - diff + '.0';
+        } else {
+            rate = Math.floor(rate) + 0.5;
+        }
+        $('#rating_h{{form.form_id}}-{{subject.course_code}}').text(rate);
+        $('.rating{{form.form_id}}-{{subject.course_code}}').starRating('setRating', rate);
+        console.log('rating called');
+        $('.rating{{form.form_id}}-{{subject.course_code}}').starRating('setReadOnly', true);
+        {% endfor %}
+        {% endfor %}
+
+
+
+        $('.button-collapse').sideNav({
+            menuWidth: 300, // Default is 300
+            edge: 'left', // Choose the horizontal origin
+            closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+            draggable: true // Choose whether you can drag to open on touch screens
+        });
+        $('ul.tabs').tabs();
+        $('.scrollspy').scrollSpy();
+
+        $('#table_id').DataTable({
+            paging: false,
+            searching: false,
+
+        });
+
+        var collapsed = false;
+        doExpanded();
+
+        function doExpanded() {
+            $('#mySidenav').css('width', '250px');
+            $('#main').css('margin-left', '250px');
+
+            //console.log($('#mySidenav').children().text());
+            $('#mySidenav').children('.side').toggle();
+            $('#toggleSideNav i').text('chevron_left')
+        }
+
+        function doCollapsed() {
+            $('#mySidenav').css('width', '110px');
+            $('#main').css('margin-left', '110px');
+
+            $('#mySidenav').children('.side').toggle();
+            $('#toggleSideNav i').text('chevron_right')
+        }
+        });
+    </script>
+</body>
+
+</html>

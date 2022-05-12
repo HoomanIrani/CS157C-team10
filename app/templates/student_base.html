@@ -1,0 +1,128 @@
+<html>
+
+<head>
+    <title>Student Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        html{
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        .brand-logo{
+            margin-left: 10px;
+        }
+        .form_name{
+            font-size: 20px;
+            padding: 4px 0px 0px 10px;
+        }
+        .maincard{
+            margin-top: -70px;
+        }
+        .maincard_header{
+            background-color: rgb(235, 235, 235); 
+            border-bottom: 10px; 
+            min-height: 63px;
+            padding: 2px 0px 0px 10px;
+        }
+        .collection-header{
+            background-color: rgb(167, 21, 21);
+        }
+        .profile{
+            margin-top: 10px;
+            color:#ffffff;
+        }
+
+        .profile:hover{
+            background-color: #e65100;
+        }
+        .participate{
+            float: right;
+        }
+        .participate:hover{
+            background-color: #1a237e;
+            color: #ffffff;
+        }
+        nav{
+            min-height: 150px;
+            background-color: #1a237e;
+        }
+        .status{
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        .collection-item{
+            min-height: 60px;
+        }
+    </style>
+</head>
+
+<body>
+  
+
+    <nav>
+    <div class="nav-wrapper">
+        <a href="{% url 'student_dashboard'%}" class="brand-logo">Student Dashboard</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse">
+            <i class="material-icons">menu</i>
+        </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li>
+                <a class='dropdown-button' data-activates="dropdown1" href="#">
+                    <i class="material-icons left">person</i><strong>Hello, {{ user.student.profile.name }}<i class="material-icons right">arrow_drop_down</i></strong></a>
+            </li>
+            <li>
+                <a href=""></a>
+            </li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo" style = "border : 0;">
+            <li>
+                <a href="{%url 'student_profile'%}">Profile</a>
+            </li>
+            <li>
+                <a href="{% url 'change_password' %}">Change Password</a>
+            </li>
+            <li>
+                <a href="{% url 'logout_view' %}">Logout</a>
+            </li>
+            </li>
+        </ul>
+        <ul class="dropdown-content" id="dropdown1">
+            <li>
+                <a href="{%url 'student_profile'%}">Profile</a>
+            </li>
+            <li>
+                <a href="{% url 'change_password' %}">Change Password</a>
+            </li>
+            <li>
+                <a href="{% url 'logout_view' %}">Logout</a>
+            </li>
+        </ul>
+    </div>
+
+    </nav>
+</head>
+<body>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    
+
+    <script>
+        $(document).ready(function () {
+            $(".dropdown-trigger").dropdown();
+
+            
+        });
+    </script>
+</body>
+
+</html>
+

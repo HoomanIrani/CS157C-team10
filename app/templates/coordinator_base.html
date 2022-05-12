@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coordinator Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        html {
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+        
+        .brand-logo {
+            margin-left: 10px;
+        }
+
+        .faculty,
+        .academics,
+        .infrastructure {
+            margin-top: 50px;
+        }
+
+        .checkboxgroup {
+            display: inline-block;
+            text-align: center;
+        }
+
+        .checkboxgroup label {
+            display: block;
+        }
+
+    </style>
+    <nav class="nav-extended indigo">
+    <div class="nav-wrapper">
+        <a href="{%url 'coordinator_dashboard'%}" class="brand-logo">Coordinator Dashboard</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse">
+            <i class="material-icons">menu</i>
+        </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li>
+                <a class='dropdown-button' data-activates="dropdown1" href="#">
+                    <i class="material-icons left">person</i>{{ user.username }}</a>
+            </li>
+            <li>
+                <a href=""></a>
+            </li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo" style = "border : 0;">
+            <li>
+                <a href="{%url 'coordinator_profile'%}">Profile</a>
+            </li>
+            <li>
+                <a href="{% url 'change_password' %}">Change Password</a>
+            </li>
+            <li>
+                <a href="{% url 'logout_view' %}">Logout</a>
+            </li>
+            </li>
+        </ul>
+        <ul class="dropdown-content" id="dropdown1">
+            <li>
+                <a href="{%url 'coordinator_profile'%}">Profile</a>
+            </li>
+            <li>
+                <a href="{% url 'change_password' %}">Change Password</a>
+            </li>
+            <li>
+                <a href="{% url 'logout_view' %}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+</head>
+<body>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
+

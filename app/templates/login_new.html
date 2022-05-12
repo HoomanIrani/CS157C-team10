@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en" >
+    
+    <head>
+        <meta charset="UTF-8">
+            <title>FEEDBACK SYSTEM Login</title>
+            
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+                    <style>
+                    html{
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+                        body {
+                            display: flex;
+                            min-height: 100vh;
+                            flex-direction: column;
+                            background-image:url('{% static "app/background.jpg" %}');
+                            background-repeat:no-repeat;
+                            background-position:left center;
+                            background-size:100%;
+                        }
+                    
+                    main {
+                        flex: 1 0 auto;
+                    }
+                    
+                    .input-field input[type=date]:focus + label,
+                    .input-field input[type=text]:focus + label,
+                    .input-field input[type=email]:focus + label,
+                    .input-field input[type=password]:focus + label {
+                        color: #e91e63;
+                    }
+                    
+                    .input-field input[type=date]:focus,
+                    .input-field input[type=text]:focus,
+                    .input-field input[type=email]:focus,
+                    .input-field input[type=password]:focus {
+                        border-bottom: 2px solid #e91e63;
+                        box-shadow: none;
+                    }
+                    </style>
+            
+            
+    </head>
+    
+            
+            <body>
+                <div class="section"></div>
+                <main>
+                    <center>
+                        <!--<img class="responsive-img" style="width: 450px;" src="{{ STATIC_URL }}/logo.gif" />-->
+                        <div class="section"></div>
+                        
+                        <br>
+                        <br>
+                     
+                        <div class="container">
+                            <div class="transbox">
+                            <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 100px 0px 100px; border: 1px solid #EEE; border-radius: 25px;" id="login_block">
+                               <!-- <img class="responsive-img" style="width: 400px;" src="{% static "app/tp.png" %}" alt="My image"/>    -->
+                               <h3 style=" roboto-condensed">StudentOpinion:<br>Feedback Management System</h3>                          
+                                <form class="col offset-s3 s6" method="post">
+                                    {% csrf_token %}
+                                    <div class='row'>
+                                        <div class='col s6'>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class='row'>
+                                        <div class='input-field col s12' id='username'>
+                                            {{ form.username }}
+                                            <label for='username'>Enter your username</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class='row'>
+                                        <div class='input-field col s12'  id="password">
+                                            {{ form.password }}
+                                            <label for='password'>Enter your password</label>
+                                        </div>
+                                        <label style='float: right;'>
+                                            <a class='pink-text' href='#!'><b>Forgot Password?</b></a>
+                                        </label>
+                                    </div>
+                                    
+                                    <br />
+                                    <center>
+                                        <div class='row'>
+                                            <button type='submit' name='loginbtn' id="loginbtn" class='col s12 btn btn-large waves-effect indigo'>Login</button>
+                                        </div>
+                                    </center>
+                                </form>
+                            </div>
+                        </div>
+                    </center>
+                    
+                    <div class="section"></div>
+                    <div class="section"></div>
+                </main>
+                
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    </body>
+    
+</html>

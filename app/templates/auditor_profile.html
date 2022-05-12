@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+<head>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        html{
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        .brand-logo{
+            margin-left: 10px;
+        }
+        .form_name{
+            font-size: 20px;
+            padding: 4px 0px 0px 10px;
+        }
+        .maincard{
+            margin-top: -70px;
+        }
+        .maincard_header{
+            background-color: rgb(235, 235, 235); 
+            border-bottom: 10px; 
+            min-height: 63px;
+            padding: 2px 0px 0px 10px;
+        }
+        .collection-header{
+            background-color: rgb(167, 21, 21);
+        }
+        .profile{
+            margin-top: 10px;
+            color:#ffffff;
+        }
+
+        .profile:hover{
+            background-color: #e65100;
+        }
+        .participate{
+            float: right;
+        }
+        .participate:hover{
+            background-color: #1a237e;
+            color: #ffffff;
+        }
+        nav{
+            min-height: 150px;
+            background-color: #1a237e;
+        }
+        .status{
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        .collection-item{
+            min-height: 60px;
+        }
+    </style>
+</head>
+
+<body>
+  
+
+    <nav>
+    <div class="nav-wrapper">
+        <a href="{%url 'auditor_dashboard'%}" class="brand-logo">Auditor Dashboard</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse">
+            <i class="material-icons">menu</i>
+        </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li>
+                <a class='dropdown-button' data-activates="dropdown1" href="#">
+                    <i class="material-icons left">person</i><strong>Hello, {{ user.auditor.profile.name }}<i class="material-icons right">arrow_drop_down</i></strong></a>
+            </li>
+            <li>
+                <a href=""></a>
+            </li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo" style = "border : 0;">
+            <li>
+                <a href="{%url 'auditor_profile'%}">Profile</a>
+            </li>
+            <li>
+                <a href="{% url 'change_password' %}">Change Password</a>
+            </li>
+            <li>
+                <a href="{% url 'logout_view' %}">Logout</a>
+            </li>
+            </li>
+        </ul>
+        <ul class="dropdown-content" id="dropdown1">
+            <li>
+                <a href="{%url 'auditor_profile'%}">Profile</a>
+            </li>
+            <li>
+                <a href="{% url 'change_password' %}">Change Password</a>
+            </li>
+            <li>
+                <a href="{% url 'logout_view' %}">Logout</a>
+            </li>
+        </ul>
+    </div>
+
+    </nav>
+</head>
+<body>
+<br><br>
+ <div class="container">
+    <div class="col s12 m8 offset-m2 l6 offset-l3">
+      <div class="card-panel grey lighten-5 z-depth-3">
+        <div class="row valign-wrapper">
+          <div class="col s2">
+            <img src="{% static "app/teacher.png" %}" alt=" Image here" class="circle responsive-img">
+          </div>
+          <div class="col s10">
+            <span class="black-text">
+                <p class="flow-text indigo-text text-darken-2"><b> Name</b></p>
+                <p class="flow-text ">{{ user.auditor.profile.name }}</p>
+                <p class="flow-text indigo-text text-darken-2"><b>Email</b></p>
+                <p class="flow-text ">{{ user.auditor.profile.email }}</p>
+                <p class="flow-text indigo-text text-darken-2"><b>Phone Number</b></p>
+                <p class="flow-text ">{{ user.auditor.profile.phone_number }}</p>
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    
+
+    <script>
+        $(document).ready(function () {
+            $(".dropdown-trigger").dropdown();
+
+            
+        });
+    </script>
+</body>
+
+</html>
+

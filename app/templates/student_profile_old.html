@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% extends 'student_base.html' %}
+
+{% block content %}
+
+<div class="row container center" >
+<div class="col s12 m6 ">
+  <div class="card blue lighten-1 ">
+    <div class="card-content white-text ">
+      <span class="card-title">Student Information</span>
+      <p>Name<br>{{ user.student.profile.name }}</p>
+      <br><br>
+
+      <p>Email<br>
+      {{ user.student.profile.email }}</p>
+      <br><br>
+
+      <p>Phone Number <br>
+      {{ user.student.profile.phone_number }}</p>
+      <br><br>
+      <p>Year and Div <br>{{ user.student.profile.year }}  {{ user.student.classroom.div }}</p>
+      <br><br>
+      <p>Department <br>
+      {{ user.student.classroom.department.name }}</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

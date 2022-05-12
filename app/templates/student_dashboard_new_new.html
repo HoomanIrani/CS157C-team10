@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% extends 'student_base.html' %}
+
+{% block content %}
+    
+    <div class="maincard container row">
+        <div class="card">
+            <div class="maincard_header">
+                <h4>Active Forms</h4>
+            </div>
+
+            <div class="card-content">
+                <ul class="collection">
+                    {% for form in feedbackforms %}
+                    <li class="collection-item">
+                        <a href="{% url 'student_feedback' form.form_id %}" class="participate btn">Participate</a>
+                        <div class="form_name">
+                            {{form.title}}
+                            <span class="status form{{form.form_id}} badge lighten-3"></span>
+                        </div>                        
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    
+    
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+    <script src="materialize-stepper.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $.get('ajax',function(response){
+                console.log(response);
+                for (form in response){
+                    if (response[form] === 'Not Attempted'){
+                        $('.'+form).addClass('red white-text darken-2');
+                        $('.'+form).text('Not Attempted');
+                    } else if (response[form] === 'Incomplete'){
+                        $('.'+form).addClass('orange white-text darken-2');
+                        $('.'+form).text('Incomplete');
+                    } else {
+                        $('.'+form).addClass('green white-text darken-4');
+                        $('.'+form).text('Complete');
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+{% extends 'coordinator_base.html' %}
+
+{% block content %}
+
+    <style>
+    </style>
+ 
+    <div class="container">
+        <ul class="collection with-header">
+            <li class="collection-header">
+                <h4>Forms</h4>
+            </li>
+            {% for form in forms %}
+            <li class="collection-item">
+                {{ form.title }}
+                <div class="form_buttons right">
+                <a href="{% url 'copy_form' form.form_id %}" class="waves-effect waves-light btn-flat">Copy</a>
+                {% if not form.is_published %}
+                <a href="{% url 'edit_form' form.form_id %}" class="waves-effect waves-light btn-flat">Edit</a>
+                <a href="#modalp{{form.form_id}}" class="waves-effect waves-light btn-flat modal-trigger">Publish</a>
+                <a href="{% url 'activate_form' form.form_id %}" class="waves-effect disabled waves-light btn" style="margin-left:7px;margin-right:7px;">Activate</a>
+                {% else %}
+                <a href="" class="waves-effect waves-light btn-flat disabled">Edit</a>
+                {% if not form.is_active %}
+                <a href="" class="waves-effect waves-light btn-flat disabled">Publish</a>                
+                <a href="{% url 'activate_form' form.form_id %}" class="waves-effect waves-light btn" style="margin-left:7px;margin-right:7px;">Activate</a>
+                {% else %}
+                <a href="{% url 'publish_form' form.form_id %}" class="waves-effect waves-light btn-flat disabled">Publish</a>                
+                <a href="{% url 'deactivate_form' form.form_id %}" class="waves-effect waves-light btn red white-text">Deactivate</a>
+                {% endif %}
+                {% endif %}
+                {% if not form.is_published %}
+                <a href="#modald{{form.form_id}}" class="btn-flat modal-trigger"><i class="material-icons">delete</i></a>
+                {% else %}
+                <a href="" class="btn-flat modal-trigger"><i class="material-icons disabled">delete_forever</i></a>
+                {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="center-align"><a href="{% url 'edit_form' %}" class="waves-effect waves-light btn center-align">Create a New Form</a></div>
+        
+    </div>
+    
+    {% for form in forms %}
+    <div id="modalp{{form.form_id}}" class="modal">
+        <div class="modal-content">
+          <h4>Are you sure?</h4>
+          <p>Publishing a form will make it uneditable but you will be able to activate or deactivate it.</p>
+        </div>
+        <div class="modal-footer">
+        <a href="{% url 'publish_form' form.form_id %}" class="modal-action modal-close waves-effect btn-flat green waves-light">Yes</a>
+        <a href="#!" class="modal-action modal-close waves-effect btn-flat red white-text waves-light">No</a>
+        </div>
+    </div>
+    <div id="modald{{form.form_id}}" class="modal">
+        <div class="modal-content">
+          <h4>Are you sure?</h4>
+          <p>Deleting a form will remove it permanently and you will not be able to retrieve it.</p>
+        </div>
+        <div class="modal-footer">
+        <a href="{% url 'delete_form' form.form_id %}" class="modal-action modal-close waves-effect btn-flat green waves-light">Yes</a>
+        <a href="#!" class="modal-action modal-close waves-effect btn-flat red white-text waves-light">No</a>
+        </div>
+    </div>
+    {% endfor %}
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.button-collapse').sideNav({
+                menuWidth: 300, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+                closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                draggable: true // Choose whether you can drag to open on touch screens
+            });
+            $('select').material_select();
+
+            $("#new_question_btn").click(function () {
+                console.log("new_question_btn clicked");
+                $('#new_question_card:first').clone().appendTo('#questions');
+            });
+
+             $("#S1").change(function () {
+                alert("The text has been changed.");
+            }); 
+            $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrainWidth: true, // Does not change width of dropdown to that of the activator
+                hover: false, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: true, // Displays dropdown below the button
+                alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                stopPropagation: false // Stops event propagation
+              }
+            );
+
+            $('.modal').modal({
+                dismissible: false,
+            });
+        });
+
+</script>
+{% endblock %}

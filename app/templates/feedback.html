@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        .brand-logo {
+            margin-left: 10px;
+        }
+
+        .faculty,
+        .academics,
+        .infrastructure {
+            margin-top: 50px;
+        }
+
+        .checkboxgroup {
+            display: inline-block;
+            text-align: center;
+        }
+
+        .checkboxgroup label {
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar-fixed">
+        <nav class="nav-extended indigo">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">Student Dashboard</a>
+                <a data-activates="mobile-demo" class="button-collapse">
+                    <i class="material-icons">menu</i>
+                </a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li>
+                        <a class='dropdown-button' data-activates="dropdown1" href="#">
+                            <i class="material-icons left">person</i>{{ user.username }}</a>
+                    </li>
+                    <li>
+                        <a href=""></a>
+                    </li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li>
+                        <a href="{% url 'student_profile' %}">Profile</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout_view' %}">Logout</a>
+                    </li>
+                    </li>
+                </ul>
+                <ul class="dropdown-content" id="dropdown1">
+                    <li>
+                        <a href="{% url 'student_profile' %}">Profile</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout_view' %}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h1>Academics</h1>
+            <ul class="collapsible popout collapsible-A" data-collapsible="accordion">
+                {% for question in acadquestions %}
+                <li>
+                    <div class="collapsible-header">
+                        <p>{{question.text}}</p></div>
+                    <div 
+                        class="collapsible-body center-align"
+                        data-question="{{ question.id }}"
+                        data-student="{{ user.student.id }}"
+                    >
+                        <a class="waves-effect waves-teal btn answer-btn-1 red collect_answer" data-answer="1">Unsatisfactory</a>
+                        <a class="waves-effect waves-teal btn answer-btn-2 amber collect_answer" data-answer="2">Needs Improvement</a>
+                        <a class="waves-effect waves-teal btn answer-btn-3 yellow collect_answer" data-answer="3">Satisfactory</a>
+                        <a class="waves-effect waves-teal btn answer-btn-4 light-green collect_answer" data-answer="4">Exceeds Expectations</a>
+                        <a class="waves-effect waves-teal btn answer-btn-5 green collect_answer" data-answer="5">Excellent</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        <div class="row">
+            <h1>Infrastructure</h1>
+            <ul class="collapsible popout collapsible-I" data-collapsible="accordion">
+                {% for question in infraquestions %}
+                <li>
+                    <div class="collapsible-header">
+                        <p>{{question.text}}</p></div>
+                    <div 
+                        class="collapsible-body center-align"
+                        data-question="{{ question.id }}"
+                        data-student="{{ user.student.id }}"
+                    >
+                        <a data-answer="1" class="waves-effect waves-teal btn answer-btn-1 red collect_answer">Unsatisfactory</a>
+                        <a data-answer="2" class="waves-effect waves-teal btn answer-btn-2 amber collect_answer">Needs Improvement</a>
+                        <a data-answer="3" class="waves-effect waves-teal btn answer-btn-3 yellow collect_answer">Satisfactory</a>
+                        <a data-answer="4" class="waves-effect waves-teal btn answer-btn-4 light-green collect_answer">Exceeds Expectations</a>
+                        <a data-answer="5" class="waves-effect waves-teal btn answer-btn-5 green collect_answer">Excellent</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        <div class="row">
+            {% for subject,faculty in courses.items %}
+            <br>
+            <h3>{{ subject.name }} - {{ faculty.profile.name }}</h3>
+            <ul class="collapsible popout collapsible-F" data-collapsible="accordion">
+                {% for question in facultyquestions %}
+                <li>
+                    <div class="collapsible-header">
+                        <p>{{question.text}}</p></div>
+                    <div 
+                        class="collapsible-body center-align"
+                        data-question="{{ question.id }}"
+                        data-student="{{ user.student.id }}"
+                        data-subject="{{ subject.id }}"
+                        data-faculty="{{ faculty.id }}"
+                    >
+                        <a data-answer="1" class="waves-effect waves-teal btn answer-btn-1 red collect_answer_faculty">Unsatisfactory</a>
+                        <a data-answer="2" class="waves-effect waves-teal btn answer-btn-2 amber collect_answer_faculty">Needs Improvement</a>
+                        <a data-answer="3" class="waves-effect waves-teal btn answer-btn-3 yellow collect_answer_faculty">Satisfactory</a>
+                        <a data-answer="4" class="waves-effect waves-teal btn answer-btn-4 light-green collect_answer_faculty">Exceeds Expectations</a>
+                        <a data-answer="5" class="waves-effect waves-teal btn answer-btn-5 green collect_answer_faculty">Excellent</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endfor %}
+
+            <a href="#" class="waves-effect waves-light btn-large"><i class="material-icons right final_submit">send</i>Submit</a>
+            
+
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.button-collapse').sideNav({
+                menuWidth: 300, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+                closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                draggable: true // Choose whether you can drag to open on touch screens
+            });
+
+            $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrainWidth: true, // Does not change width of dropdown to that of the activator
+                hover: false, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: true, // Displays dropdown below the button
+                alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                stopPropagation: false // Stops event propagation
+            });
+
+            $('.final_submit').click(function(){
+                console.log('called');
+                if($('.unfilled').length > 0){
+                    alert('Please fill make sure all the questions are filled up!');
+                } else {
+                    alert('Thank you for filling up!');
+                }
+            })
+
+            $('.collapsible').collapsible();
+
+            $('.answer-btn-1').click(function () {
+                $(this).closest('div').prev().addClass("red white-text filled lighten-2");
+                $(this).closest('div').prev().removeClass("unfilled amber yellow light-green green");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.answer-btn-2').click(function () {
+                $(this).closest('div').prev().addClass("amber filled lighten-2");
+                $(this).closest('div').prev().removeClass("unfilled red white-text yellow light-green green");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+
+            });
+
+            $('.answer-btn-3').click(function () {
+                $(this).closest('div').prev().addClass("yellow filled lighten-2");
+                $(this).closest('div').prev().removeClass("unfilled amber red white-text light-green green");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.answer-btn-4').click(function () {
+                $(this).closest('div').prev().addClass("light-green white-text filled lighten-2");
+                $(this).closest('div').prev().removeClass("amber yellow red green unfilled");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.answer-btn-5').click(function () {
+                $(this).closest('div').prev().addClass("green white-text filled lighten-2");
+                $(this).closest('div').prev().removeClass("amber yellow light-green red unfilled");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.collect_answer').each(function(index){
+                var question_id = $(this).parent().data('question'),
+                student_id = $(this).parent().data('student');
+
+                var ele = $(this);
+
+                var answer;
+
+
+                $.ajax({
+                    url:'/ajax/student_feedback_response_get',
+                    data: {
+                        'q_id':question_id,
+                        's_id':student_id,
+                    },
+                    dataType: 'json',
+                    success:function(data){
+                        answer = data['ans'];
+                        
+                        if(answer == 1){
+                            ele.closest('div').prev().addClass("red white-text filled lighten-2");
+                            ele.closest('div').prev().removeClass("amber yellow light-green green unfilled");
+                         } else if (answer == 2){
+                            ele.closest('div').prev().addClass("amber filled lighten-2");
+                            ele.closest('div').prev().removeClass("red white-text yellow light-green green unfilled");
+                         } else if (answer == 3){
+                            ele.closest('div').prev().addClass("yellow filled lighten-2");
+                            ele.closest('div').prev().removeClass("amber red white-text light-green green unfilled");
+                         } else if (answer == 4){
+                            ele.closest('div').prev().addClass("light-green white-text filled lighten-2");
+                            ele.closest('div').prev().removeClass("amber yellow red green unfilled");
+                         } else if (answer == 5){
+                            ele.closest('div').prev().addClass("green white-text filled lighten-2");
+                            ele.closest('div').prev().removeClass("amber yellow light-green red unfilled");
+                         } else {
+                            while (ele.closest('div').prev().hasClass("filled"))
+                                ele.closest('div').prev().removeClass("filled"); 
+                            ele.closest('div').prev().addClass("unfilled"); 
+                         }
+        
+                    }
+                 });
+            });
+
+            $('.collect_answer_faculty').each(function(index){
+                var question_id = $(this).parent().data('question'),
+                    student_id = $(this).parent().data('student'),
+                    faculty_id = $(this).parent().data('faculty'),
+                    subject_id = $(this).parent().data('subject');
+
+                var ele = $(this);
+
+                var answer;
+
+                $.ajax({
+                    url:'/ajax/student_feedback_faculty_response_get',
+                    data: {
+                        'q_id':question_id,
+                        's_id':student_id,
+                        'f_id':faculty_id,
+                        'sub_id':subject_id
+                    },
+                    dataType: 'json',
+                    success:function(data){
+                        answer = data['ans'];
+                        
+                        if(answer == 1){
+                            ele.closest('div').prev().addClass("red white-text filled");
+                            ele.closest('div').prev().removeClass("amber yellow light-green green unfilled");
+                         } else if (answer == 2){
+                            ele.closest('div').prev().addClass("amber filled");
+                            ele.closest('div').prev().removeClass("red white-text yellow light-green green unfilled");
+                         } else if (answer == 3){
+                            ele.closest('div').prev().addClass("yellow filled");
+                            ele.closest('div').prev().removeClass("amber red white-text light-green green unfilled");
+                         } else if (answer == 4){
+                            ele.closest('div').prev().addClass("light-green white-text filled");
+                            ele.closest('div').prev().removeClass("amber yellow red green unfilled");
+                         } else if (answer == 5){
+                            ele.closest('div').prev().addClass("green white-text filled");
+                            ele.closest('div').prev().removeClass("amber yellow light-green red unfilled");
+                         } else {
+                            while (ele.closest('div').prev().hasClass("filled"))
+                                ele.closest('div').prev().removeClass("filled"); 
+                            ele.closest('div').prev().addClass("unfilled"); 
+                        }
+                    }
+                 });
+            });
+
+            $('.collect_answer').click(function(){
+                var question_id = $(this).parent().data('question'),
+                    student_id = $(this).parent().data('student'),
+                    answer_val = $(this).data('answer');
+
+                $.ajax({
+                   url:'/ajax/student_feedback_response_set',
+                   data: {
+                       'q_id':question_id,
+                       's_id':student_id,
+                       'a_val':answer_val
+                   },
+                   dataType: 'json',
+                   success:function(data){}
+                });
+            });
+
+            $('.collect_answer_faculty').click(function(){
+                var question_id = $(this).parent().data('question'),
+                    student_id = $(this).parent().data('student'),
+                    faculty_id = $(this).parent().data('faculty'),
+                    subject_id = $(this).parent().data('subject'),
+                    answer_val = $(this).data('answer');
+
+                console.log('collect answer faculty clicked')
+
+                $.ajax({
+                    url:'/ajax/student_feedback_faculty_response_set',
+                    data: {
+                        'q_id':question_id,
+                        's_id':student_id,
+                        'f_id':faculty_id,
+                        'sub_id':subject_id,
+                        'a_val':answer_val,
+                    },
+                    dataType: 'json',
+                    success:function(data){
+                    },
+                    error: function(data){
+                    }
+                 });
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

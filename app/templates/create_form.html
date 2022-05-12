@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        html {
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        .brand-logo {
+            margin-left: 10px;
+            outline: 0;
+        }
+
+        .tab a {
+            outline: 0;
+        }
+
+        .btn-flat {
+            color: white;
+        }
+
+        .btn-flat:hover {
+            background-color: #ff5722;
+        }
+
+        .tab:hover {
+            background-color: #ff5722;
+        }
+
+        #summary,
+        #questions,
+        #preview {
+            margin-top: 100px;
+        }
+
+        .close_question_btn {
+            float: right;
+            background-color: white;
+            color: black;
+        }
+
+        .collapsible-header:hover {
+            background-color: #fff3e0;
+        }
+
+        .card:hover {
+            background-color: #f6f6ff;
+        }
+
+        .fixed-action-btn {
+            position: absolute;
+            display: inline-block;
+            left: 24px;
+            padding: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <nav class="nav-extended #1a237e indigo darken-4">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">
+                <i class="material-icons left">create</i>
+                Create Forms</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down" >
+                <li>
+                    <a class="waves-effect waves-light btn-flat" href = "{% url 'logout_view' %}">
+                        <i class="material-icons left">exit_to_app</i>
+                         
+                        <b>Logout</b>
+                    </a>
+                </li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li>
+                    <a href="{% url 'logout_view' %}" class="waves-effect waves-light btn-flat">
+                        <i class="material-icons left">exit_to_app</i>
+                        <b>Logout</b>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container col s12">
+        <ul class="collapsible" data-collapsible="accordion">
+            <li>
+                <div class="collapsible-header">
+                    <i class="material-icons left">description</i>Templates</div>
+                <div class="collapsible-body">
+                    <div class="collection">
+                        <a href="#!" class="collection-item">University Quality Enhancement feedback</a>
+                        <a href="#!" class="collection-item">Laboratories improvement feedback</a>
+                        <a href="#!" class="collection-item">Mess/Canteen improvement feedback</a>
+                        <a href="#!" class="collection-item">Classrooms improvement feedback</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header">
+                    <i class="material-icons">control_point_duplicate</i>Start a new form</div>
+                <div class="collapsible-body">
+
+                    <div class="card">
+                        <form action="{% url 'create_form' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="card-content">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">line_style</i>
+                                {{ form.title }}
+                                <label for="title">Form Title</label>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button class="btn waves-effect waves-light" type="submit">Submit
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                        </form>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+
+<!-- 
+    <div id="questions" class="container col s12">
+        <h2 style="margin-bottom:20px; color:#1a237e;">University Quality Enhancement Feedback</h2>
+
+        <div class="card new_question_card">
+            <div class="card-content">
+                <a class="btn close_question_btn">
+                    <i class="material-icons">close</i>
+                </a>
+                <h5>Select Question Type</h5>
+                <div id="Q1" class="input-field col s12">
+
+                    <select>
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="1">Academics</option>
+                        <option value="2">Faculty</option>
+                        <option value="3">Infrastructure</option>
+                    </select>
+                </div>
+                <h5>Question content</h5>
+                <div class="input-field">
+                    <textarea id="textarea1" class="materialize-textarea"></textarea>
+                    <label for="textarea1">Write your question here</label>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="card new_question_card_template">
+            <div class="card-content">
+                <a class="close_question_btn btn">
+                    <i class="material-icons">close</i>
+                </a>
+                <h5>Select Question Type</h5>
+                <div id="Q1" class="input-field col s12">
+                    
+                    <select>
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="1">Academics</option>
+                        <option value="2">Faculty</option>
+                        <option value="3">Infrastructure</option>
+                    </select>
+                </div>
+                <h5>Question content</h5>
+                <div class="input-field">
+                    <textarea id="textarea1" class="materialize-textarea"></textarea>
+                    <label for="textarea1">Write your question here</label>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="fab-edit" style="position: relative;">
+        <div class="fixed-action-btn" style="position: absolute; display: inline-block; right: 24px;">
+        <a id="new_question_btn" class="btn-floating fab waves-effect waves-light red right">
+            <i class="material-icons">add</i>
+        </a>
+        </div>
+    </div>
+    
+
+    <div id="preview" class="container col s12">
+        <div class="card horizontal">
+            <div class="card-stacked">
+                <div class="card-content">
+                    <h5>Are the laboratories properly maintained?</h5>
+                </div>
+                <div class="card-action">
+                    <table class="centered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>Unsatisfactory</b>
+                                </td>
+                                <td>
+                                    <b>Improvement needed</b>
+                                </td>
+                                <td>
+                                    <b>Meets expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceeds expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceptional</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio_1" id="radio_1_1" />
+                                    <label for="radio_1_1"></label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_1" id="radio_1_2" />
+                                    <label for="radio_1_2"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_1" id="radio_1_3" />
+                                    <label for="radio_1_3"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_1" id="radio_1_4" />
+                                    <label for="radio_1_4"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_1" id="radio_1_5" />
+                                    <label for="radio_1_5"> </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="card horizontal">
+            <div class="card-stacked">
+                <div class="card-content">
+                    <h5>How will you rate Food hygiene of canteen/mess ?</h5>
+                </div>
+                <div class="card-action">
+                    <table class="centered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>Unsatisfactory</b>
+                                </td>
+                                <td>
+                                    <b>Improvement needed</b>
+                                </td>
+                                <td>
+                                    <b>Meets expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceeds expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceptional</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio_2" id="radio_2_1" />
+                                    <label for="radio_2_1"></label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_2" id="radio_2_2" />
+                                    <label for="radio_2_2"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_2" id="radio_2_3" />
+                                    <label for="radio_2_3"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_2" id="radio_2_4" />
+                                    <label for="radio_2_4"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_2" id="radio_2_5" />
+                                    <label for="radio_2_5"> </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="card horizontal">
+            <div class="card-stacked">
+                <div class="card-content">
+                    <h5>How frequently water purifiers/water coolers are cleaned?</h5>
+                </div>
+                <div class="card-action">
+                    <table class="centered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>Unsatisfactory</b>
+                                </td>
+                                <td>
+                                    <b>Improvement needed</b>
+                                </td>
+                                <td>
+                                    <b>Meets expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceeds expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceptional</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio_3" id="radio_3_1" />
+                                    <label for="radio_3_1"></label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_3" id="radio_3_2" />
+                                    <label for="radio_3_2"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_3" id="radio_3_3" />
+                                    <label for="radio_3_3"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_3" id="radio_3_4" />
+                                    <label for="radio_3_4"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_3" id="radio_3_5" />
+                                    <label for="radio_3_5"> </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="card horizontal">
+            <div class="card-stacked">
+                <div class="card-content">
+                    <h5>How will you rate the sports facilities?</h5>
+                </div>
+                <div class="card-action">
+                    <table class="centered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>Unsatisfactory</b>
+                                </td>
+                                <td>
+                                    <b>Improvement needed</b>
+                                </td>
+                                <td>
+                                    <b>Meets expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceeds expectations</b>
+                                </td>
+                                <td>
+                                    <b>Exceptional</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio_4" id="radio_4_1" />
+                                    <label for="radio_4_1"></label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_4" id="radio_4_2" />
+                                    <label for="radio_4_2"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_4" id="radio_4_3" />
+                                    <label for="radio_4_3"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_4" id="radio_4_4" />
+                                    <label for="radio_4_4"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="radio_4" id="radio_4_5" />
+                                    <label for="radio_4_5"> </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="publish" class="col s12">Test 4</div>
+-->
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.button-collapse').sideNav({
+                menuWidth: 300, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+                closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                draggable: true // Choose whether you can drag to open on touch screens
+            });
+
+            
+
+            $('select').material_select();
+
+            $(".new_question_card_template").hide();
+
+            $("#new_question_btn").on('click', function () {
+                console.log('div')
+                $(".new_question_card_template").clone(true,true).appendTo("#questions").show().removeClass("new_question_card_template").addClass;
+                $('select').material_select();
+
+            });
+
+            //$(".close_question_btn").hide();
+
+            $(".close_question_btn").click(function () {
+                console.log('close called');
+                $(this).parent().remove();
+                $('select').material_select();
+            });
+
+            
+            $(".active-tab").click(function(){
+                if($("#question-tab").hasClass('active')){
+                    console.log('such true');
+                    $("#new_question_btn").show();
+                } else {
+                    $("#new_question_btn").hide();
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+{% extends 'student_base.html' %}
+
+{% block content %}
+    <style>
+        .collection-item{
+            height:55px;
+            font-size: 20px;
+        }
+    </style>
+
+<br>
+ <br>
+    <div class="container">
+        <ul class="collection with-header">
+            <li class="collection-header"><h4>Active Forms</h4></li>
+            {% for form in feedbackforms %}
+                <li class="collection-item">{{form.title}}<a href="#" class="waves-effect waves-teal btn right">button</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('.modal').modal();        
+    });
+
+</script>
+
+{% endblock %}
+
+<p class="flow-text">
+1. Give your feedback honestly. <b>Biased feedbacks will be detected and discarded.</b> <br>
+2. Take <b>sufficient time to read each question</b> before giving your response. <br>
+3. Your feedback will remain <b>anonymous</b>. Give your feedback fearlessly. <br>
+4. Giving feedback is <b>mandatory</b> for all students who are eligible for it. (Attendance > 75%). <br>
+5. Give your feedback keeping in mind that your feedback will be analyzed and thus used for the <b>enhancement of the various facilities and services</b> you're provided by the university/college. <br>
+6. You're allowed to give feedback <b>only once</b> per scheduled feedback period.</p>

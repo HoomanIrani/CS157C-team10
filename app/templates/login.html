@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Page</title>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<style>
+    .custom-top-margin{
+        margin-top: 20%;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="row">
+    
+            <div class="col l8 m8 s12 offset-l2 offset-m2 z-depth-1" id="panell">
+                <h5 id="title">Login Form</h5>
+                <br>
+                <form method="POST">
+                {% csrf_token %}
+                <div class="input-field" id="username">
+                {{ form.username }}
+                <label for="username">Username</label>
+            </div>
+            <div class="input-field" id="password">
+                {{ form.password }}
+                <label for="password">Password</label>
+            </div>
+            <button class="waves-effect waves-light btn" id="loginbtn" type="submit">Login</button>
+            
+            </form>
+    
+            </div>
+        </div>
+    
+    </div>
+
+    <style>
+    #panell{
+        margin-top: 100px;
+        padding: 0px;
+    }
+    #loginbtn{
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    }
+    #title{
+    background-color: #2bbbad;
+    color: white;
+    padding: 8px;
+    margin-top: 0px
+    }
+    form{
+    padding:0px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    }
+    #username,#password{
+    margin-left: 20px;
+    margin-right: 20px;
+    }
+    #checkbox{
+    margin-left: 30px;
+    }
+    </style>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script>
+        
+    </script>
+
+</body>
+
+</html>

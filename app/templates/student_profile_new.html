@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% extends 'student_base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+<br><br>
+ <div class="container">
+    <div class="col s12 m8 offset-m2 l6 offset-l3">
+      <div class="card-panel grey lighten-5 z-depth-3">
+        <div class="row valign-wrapper">
+          <div class="col s2">
+            <img src="{% static "app/student.png" %}" alt=" Image here" class="circle responsive-img">
+            <!-- notice the "circle" class -->
+          </div>
+          <div class="col s10">
+            <span class="black-text">
+                <p class="flow-text indigo-text text-darken-2"><b> Name</b></p>
+                <p class="flow-text ">{{ user.student.profile.name }}</p>
+                <p class="flow-text indigo-text text-darken-2"><b>Email</b></p>
+                <p class="flow-text ">{{ user.student.profile.email }}</p>
+                <p class="flow-text indigo-text text-darken-2"><b>Phone Number</b></p>
+                <p class="flow-text ">{{ user.student.profile.phone_number }}</p>
+                <p class="flow-text indigo-text text-darken-2"><b>Year and Div</b></p>
+                <p class="flow-text ">{{ user.student.classroom.year}}  {{user.student.classroom.div }}</p>
+                <p class="flow-text indigo-text text-darken-2"><b>Department</b></p>
+                <p class="flow-text ">{{ user.student.classroom.department.name }}</p>
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

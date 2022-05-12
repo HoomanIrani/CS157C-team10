@@ -1,0 +1,66 @@
+<!-- Styles -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 500px;
+}												
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/pie.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+<!-- Chart code -->
+<script>
+var chart = AmCharts.makeChart( "chartdiv", {
+  "type": "pie",
+  "theme": "light",
+  "titles": [ {
+    "text": "Count of Marks",
+    "size": 16
+  } ],
+  "dataProvider": [ {
+    "country": "Q1",
+    "visits": 7252
+  }, {
+    "country": "Q2",
+    "visits": 3882
+  }, {
+    "country": "Q3",
+    "visits": 1809
+  }, {
+    "country": "Q4",
+    "visits": 1322
+  }, {
+    "country": "Q5",
+    "visits": 1122
+  }, {
+    "country": "Q6",
+    "visits": 414
+  }, {
+    "country": "Q7",
+    "visits": 384
+  }, {
+    "country": "Q8",
+    "visits": 211
+  } ],
+  "valueField": "visits",
+  "titleField": "country",
+  "startEffect": "elastic",
+  "startDuration": 2,
+  "labelRadius": 15,
+  "innerRadius": "50%",
+  "depth3D": 10,
+  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+  "angle": 15,
+  "export": {
+    "enabled": true
+  }
+} );
+</script>
+
+<!-- HTML -->
+<div id="chartdiv"></div>

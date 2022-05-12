@@ -1,0 +1,414 @@
+{% load static %}
+<html>
+
+<head>
+    <title>Student Feedback</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'materialize-stepper.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        html {
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        .brand-logo {
+            margin-left: 10px;
+        }
+        .profile{
+            margin-top: 10px;
+            color:#ffffff;
+        }
+
+        .profile:hover{
+            background-color: #e65100;
+        }
+       
+        nav{
+            min-height: 180px;
+            background-color: #1a237e;
+        }
+        .maincard{
+            margin-top: -100px;
+            height: 80%;
+        }
+        .stepper{
+            height: 100%;
+        }
+        .collect-answer{
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .collapsible-header{
+            font-size: 22px;
+        }
+
+    input[type='radio']:after {
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: #d1d3d1;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid white;
+    }
+
+    input[type='radio']:checked:after {
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: #ffa500;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid white;
+    }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-wrapper indigo darken-4">
+            <a href="#!" class="brand-logo">Feedback</a>
+            <ul class="right hide-on-med-and-down">
+                <li>
+                    <a class="profile waves-effect waves-light btn-flat">
+                        <i class="material-icons left">person</i>
+                        <b>Hello, {{user.student.profile.name}}</b>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card maincard">
+            <ul class="stepper horizontal">
+                <li class="step active">
+                    <div class="step-title waves-effect">Academics</div>
+                    <div class="step-content">
+                        <ul class="collapsible popout" data-collapsible="accordion">
+                            {% for question in acadquestions %}
+                            <li>
+                                <div class="collapsible-header active">
+                                    {{question.text}}
+                                </div>
+                                <div 
+                                    class="collapsible-body center-align"
+                                    data-question="{{ question.question_id }}"
+                                    data-student="{{ user.student.student_id }}"
+                                >
+                                    <a data-answer="1" class="waves-effect waves-teal btn answer-btn-1 red collect_answer" style="font-size:19px;"><b>Unsatisfactory</b></a>
+                                    <a data-answer="2" class="waves-effect waves-teal btn answer-btn-2 amber darken-4 collect_answer" style="font-size:19px;"><b>Needs Improvement</b></a>
+                                    <a data-answer="3" class="waves-effect waves-teal btn answer-btn-3 light-green darken-2  collect_answer" style="font-size:19px;"><b>Satisfactory</b></a>
+                                    <a data-answer="4" class="waves-effect waves-teal btn answer-btn-4 light-green darken-3 collect_answer" style="font-size:19px;"><b>Exceeds Expectations</b></a>
+                                    <a data-answer="5" class="waves-effect waves-teal btn answer-btn-5 green darken-4 collect_answer" style="font-size:19px;"><b>Excellent</b></a>
+                                </div>
+                            </li>
+                            {% endfor %}
+                            <li>
+                                <div class="collapsible-header active">
+                                        Enter your comments here!
+                                </div>
+                                <div 
+                                    class="collapsible-body center-align"
+                                    data-question="{{ acadcomment.id }}"
+                                    data-student="{{ user.student.student_id }}"
+                                >
+                                    <div class="row">
+                                        <form class="col s12">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <textarea id="acadtext" class="materialize-textarea"></textarea>
+                                                <label for="textarea1">Enter text</label>
+                                            </div>
+                                        </div>
+                                        <div class="row center-align">
+                                            <a href="#" class="waves-effect waves-light btn sentiment-btn black-text white">Sentiment</a>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="center-align">
+                            <a href="#" class="waves-effect waves-light btn next-step">Continue</a>
+                            <a href="{%url 'student_dashboard'%}" class="waves-effect waves-light btn">Finish</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="step">
+                    <div class="step-title waves-effect">Infrastructure</div>
+                    <div class="step-content">
+                        <ul class="collapsible popout" data-collapsible="accordion">
+                            {% for question in infraquestions %}
+                            <li>
+                                <div class="collapsible-header active">
+                                    {{question.text}}
+                                </div>
+                                <div 
+                                    class="collapsible-body center-align"
+                                    data-question="{{ question.question_id }}"
+                                    data-student="{{ user.student.student_id }}"
+                                >
+                                    <a data-answer="1" class="waves-effect waves-teal btn answer-btn-1 red collect_answer" style="font-size:19px;">
+                                        <b>Unsatisfactory</b>
+                                    </a>
+                                    <a data-answer="2" class="waves-effect waves-teal btn answer-btn-2 amber darken-4 collect_answer" style="font-size:19px;">
+                                        <b>Needs Improvement</b>
+                                    </a>
+                                    <a data-answer="3" class="waves-effect waves-teal btn answer-btn-3 light-green darken-2  collect_answer" style="font-size:19px;">
+                                        <b>Satisfactory</b>
+                                    </a>
+                                    <a data-answer="4" class="waves-effect waves-teal btn answer-btn-4 light-green darken-3 collect_answer" style="font-size:19px;">
+                                        <b>Exceeds Expectations</b>
+                                    </a>
+                                    <a data-answer="5" class="waves-effect waves-teal btn answer-btn-5 green darken-4 collect_answer" style="font-size:19px;">
+                                        <b>Excellent</b>
+                                    </a>
+                                </div>
+                            </li>
+                            {% endfor %}
+                            <li>
+                                <div class="collapsible-header active">
+                                        Enter your comments here!
+                                </div>
+                                <div 
+                                    class="collapsible-body center-align"
+                                    data-question="{{ acadcomment.id }}"
+                                    data-student="{{ user.student.student_id }}"
+                                >
+                                    <div class="row">
+                                        <form class="col s12">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <textarea id="infratext" class="materialize-textarea"></textarea>
+                                                <label for="textarea1">Enter text</label>
+                                            </div>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    <div class="row center-align">
+                                        <a href="#" class="waves-effect waves-light btn sentiment-btn black-text white">Sentiment</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <div class="center-align">
+                            <a href="#" class="waves-effect waves-light btn next-step">Continue</a>
+                            <a href="{%url 'student_dashboard'%}" class="waves-effect waves-light btn">Finish</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="step">
+                    <div class="step-title waves-effect">Faculty</div>
+                    <div class="step-content">
+                        <div class="container">
+                            <div class="card">
+                                <table class="bordered">
+                                    <thead>
+                                        <tr>
+                                            <th data-field="id">Subject</th>
+                                            <th data-field="name">Faculty</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for subject,teacher in courses.items %}
+                                        <tr>
+                                            <td>{{ subject.name }}</td>
+                                            <td>{{ teacher.profile.name }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="center-align">
+                            <a href="{% url 'feedback_faculty' form.form_id %}" class="waves-effect waves-light btn-large">Confirm and Continue</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {% csrf_token %}
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+    <script src="{% static 'materialize-stepper.min.js' %}"></script>
+
+    <script>
+        $(document).ready(function(){
+           
+            $('.stepper').activateStepper();
+            $('.collapsible').collapsible();
+
+            $('[name="group1"]').click(function(){
+                
+            });
+
+            $('.answer-btn-1').click(function () {
+                $(this).closest('div').prev().removeClass("unfilled amber light-green green red white-text lighten-2 darken-1 darken-4");
+                $(this).closest('div').prev().addClass("red white-text filled lighten-2");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.answer-btn-2').click(function () {
+                $(this).closest('div').prev().removeClass("unfilled amber light-green green red white-text lighten-2 darken-1 darken-4");
+                $(this).closest('div').prev().addClass("amber filled darken-1");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+
+            });
+
+            $('.answer-btn-3').click(function () {
+                $(this).closest('div').prev().removeClass("unfilled amber light-green green red white-text lighten-2 darken-1 darken-4");
+                $(this).closest('div').prev().addClass("light-green filled lighten-2");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.answer-btn-4').click(function () {
+                $(this).closest('div').prev().removeClass("unfilled amber light-green green red white-text lighten-2 darken-1 darken-4");
+                $(this).closest('div').prev().addClass("green filled");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.answer-btn-5').click(function () {
+                $(this).closest('div').prev().removeClass("unfilled amber light-green green red white-text lighten-2 darken-1 darken-4");
+                $(this).closest('div').prev().addClass("green white-text filled darken-4");
+                $(this).parent().parent().parent().collapsible('close',$(this).parent().parent().index());
+                $(this).parent().parent().parent().collapsible('open',$(this).parent().parent().index()+1);
+            });
+
+            $('.collect_answer').each(function(index){
+                var question_id = $(this).parent().data('question'),
+                student_id = $(this).parent().data('student');
+
+                var ele = $(this);
+
+                var answer;
+
+
+                $.ajax({
+                    url:'/ajax/student_feedback_response_get',
+                    data: {
+                        'q_id':question_id,
+                        's_id':student_id,
+                    },
+                    dataType: 'json',
+                    success:function(data){
+                        answer = data['ans'];
+                        
+                        if(answer == 1){
+                            ele.closest('div').prev().removeClass("unfilled amber light-green green red white-text lighten-2 darken-1 darken-4");
+                            ele.closest('div').prev().addClass("red white-text filled lighten-2");
+                         } else if (answer == 2){
+                            ele.closest('div').prev().removeClass("unfilled amber light-green green red white-text lighten-2 darken-1 darken-4");
+                            ele.closest('div').prev().addClass("amber filled darken-1");
+                         } else if (answer == 3){
+                            ele.closest('div').prev().removeClass("unfilled amber light-green green red white-text lighten-2 darken-1 darken-4");
+                            ele.closest('div').prev().addClass("light-green filled lighten-2");
+                         } else if (answer == 4){
+                            ele.closest('div').prev().removeClass("unfilled amber light-green green red white-text lighten-2 darken-1 darken-4");
+                            ele.closest('div').prev().addClass("green filled");
+                         } else if (answer == 5){
+                            ele.closest('div').prev().removeClass("unfilled amber light-green green red white-text lighten-2 darken-1 darken-4");
+                            ele.closest('div').prev().addClass("green white-text filled darken-4");
+                         } else {
+                            while (ele.closest('div').prev().hasClass("filled"))
+                                ele.closest('div').prev().removeClass("filled"); 
+                            ele.closest('div').prev().addClass("unfilled"); 
+                         }
+        
+                    }
+                 });
+            });
+
+            $('.collect_answer').click(function(){
+                var question_id = $(this).parent().data('question'),
+                    student_id = $(this).parent().data('student'),
+                    answer_val = $(this).data('answer');
+
+                $.ajax({
+                   url:'/ajax/student_feedback_response_set',
+                   data: {
+                       'q_id':question_id,
+                       's_id':student_id,
+                       'a_val':answer_val
+                   },
+                   dataType: 'json',
+                   success:function(data){}
+                });
+            });
+
+            $('#acadtext').change(function(){
+                $.ajax({
+                    url:'ajax/textual',
+                    method:'POST',
+                    data:{
+                        'text':$('#acadtext').val(),
+                        'student':"{{user.student.student_id}}",
+                        'formid':"{{form.form_id}}",
+                        'type':'Academics',
+                        'csrfmiddlewaretoken':jQuery("[name=csrfmiddlewaretoken]").val(),
+                    },
+                    success:function(response){
+                        var sentiment = response['sentiment'];
+                        if(sentiment == 'pos'){
+                            $('.sentiment-btn').removeClass('white black-text').addClass('green');
+                        } else if (sentiment == 'neu'){
+                            $('.sentiment-btn').removeClass('white').addClass('yellow');
+                        } else {
+                            $('.sentiment-btn').removeClass('white black-text').addClass('red');
+                        }
+                    }
+                })
+            });
+
+            $('#infratext').change(function(){
+                $.ajax({
+                    url:'ajax/textual',
+                    method:'POST',
+                    data:{
+                        'text':$('#infratext').val(),
+                        'student':"{{user.student.student_id}}",
+                        'formid':"{{form.form_id}}",
+                        'type':'Infrastructure',
+                        'csrfmiddlewaretoken':jQuery("[name=csrfmiddlewaretoken]").val(),
+                    },
+                    success:function(response){
+                        var sentiment = response['sentiment'];
+                        if(sentiment == 'pos'){
+                            $('.sentiment-btn').removeClass('green red white black-text yellow').addClass('green');
+                        } else if (sentiment == 'neu'){
+                            $('.sentiment-btn').removeClass('green red white black-text yellow').addClass('yellow');
+                        } else {
+                            $('.sentiment-btn').removeClass('green red white black-text yellow').addClass('red');
+                        }
+                    }
+                })
+            });
+
+        });
+    </script>
+</body>
+
+</html>
