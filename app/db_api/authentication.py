@@ -1,12 +1,6 @@
-from app.models import  Profile, Student, Professor, CourseProfessor
+from app.models import *
 def authenticate_role(user):
-	# if Student username exists and password is matching:
-	# 	return "student"
-	# elif Faculty username exists and password is matching:
-	# 	return "faculty's role"
-	# else:
-	# 	return -1
-   
+	
     #print ("is in authentication.py")
     if hasattr(user, 'student'):
         #print (user.student.type)
