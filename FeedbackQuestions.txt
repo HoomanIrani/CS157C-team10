@@ -1,0 +1,123 @@
+How relevant is the additional course material?
+Faculty
+Relevance
+How good is the teacher at integrating content with other courses?
+Faculty
+Dedication
+Does the teacher dedicate sufficient time for doubt clearing?
+Faculty
+Dedication
+How useful is the teaching material?
+Faculty
+Usefulness
+How would you rate the timeliness of course completion?
+Faculty
+Dedication
+How would you rate the commitment and sincerity of the teacher?
+Faculty
+Dedication
+Does the teacher make effective use of projector for presentations?
+Faculty
+Effectiveness
+Does the teacher participate in discussion outside classroom?
+Faculty
+Communication
+How good are the communication skills of the teacher?
+Faculty
+Communication
+How effectively is the teacher able to communicate?
+Faculty
+Effectiveness
+How good is the teacher at motivating students?
+Faculty
+Motivation
+Does the teacher provide reference to real life examples/situations while teaching?
+Faculty
+Relevance
+Does the faculty encourage student participation in class?
+Faculty
+Motivation
+Does the teacher discuss assignments in class?
+Faculty
+Communication
+Is the evaluation of internal assessments fair?
+Faculty
+Effectiveness
+How would you rate the extent of interest generation by the teacher?
+Faculty
+Dedication
+Does the faculty prepare for lectures thoroughly?
+Faculty
+Dedication
+Does the faculty take care of student grievances?
+Faculty
+Communication
+How helpful is the teacher in giving advices regarding academic(or other) issues?
+Faculty
+Communication
+To what extent does the teacher possess deep knowledge of the subject?
+Faculty
+None
+Is the teacher punctual?
+Faculty
+Punctuality
+Are the laboratories properly maintained?
+Infrastructure
+Maintenance
+How would you rate the hygiene of canteen and mess food?
+Infrastructure
+Hygiene
+How would you rate the timeliness in cleaning of water purifiers/water coolers?
+Infrastructure
+Hygiene
+How would you rate the sports facilities?
+Infrastructure
+Extras
+How would you rate the recreational facilities provided by the college? (Gymnasium etc.)
+Infrastructure
+Campus
+How good are the library facilities and material?
+Infrastructure
+Campus
+How would you rate the sufficiency of space of parking vehicles?
+Infrastructure
+Campus
+How is the health care facility?
+Infrastructure
+None
+How clean are the corridors?
+Infrastructure
+Cleanliness
+How would you rate the cleanliness of classrooms?
+Infrastructure
+Cleanliness
+How good is the ventilation of the classrooms?
+Infrastructure
+Maintenance
+Is there sufficient lighting in classrooms?
+Infrastructure
+Maintenance
+Are the benches,desks and/or chairs in a condition good enough?
+Infrastructure
+Maintenance
+How would you rate the locker facility provided by the college?
+Infrastructure
+Maintenance
+How do you evaluate the extent to which the syllabus was challenging?
+Academics
+None
+To what extent were you satisfied with the difficulty of the course?
+Academics
+None
+How interesting was the course?
+Academics
+None
+How would you rate the sequential integration of workshop/studio/practicals with theory classes?
+Academics
+None
+Was the number of practicals sessions conducted sufficient?
+Academics
+None
+To what extent was the course beneficial?
+Academics
+None
