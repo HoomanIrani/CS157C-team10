@@ -12,7 +12,7 @@ Motivation behind this idea is to create an independent platform to be used by i
 
 ## Stakeholders
 
-Stakeholders involved in this project are students, professors and coordinators respectively. Coordinators are the one that design the survey forms based on the course needs. In the next step students are asked to fill the forms. Once the survey is finished, professors receive the feedback results and statistical data based on the students survey. Coordinators also can see the results to make sure how instructors perform.
+Stakeholders involved in this project are students, professors and, coordinators respectively. Coordinators are the one that design the survey forms based on the course needs. In the next step students are asked to fill the forms. Once the survey is finished, professors receive the feedback results and statistical data based on the students survey. Coordinators also can see the results to make sure how instructors perform.
 
 ## Functional Requirements:
 ### Users
